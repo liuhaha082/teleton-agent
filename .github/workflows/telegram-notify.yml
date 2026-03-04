@@ -1,20 +1,23 @@
 name: Telegram Notify
 
 on:
-  push:
-    branches: [main]
-    tags: ["v*"]
+  workflow_run:
+    workflows: ["CI", "Release"]
+    types: [completed]
 
 jobs:
-  # ---- Commit notification ----
+  # ---- Commit notification (only after CI passes) ----
   commit:
-    if: startsWith(github.ref, 'refs/heads/')
+    if: >-
+      github.event.workflow_run.name == 'CI'
+      && github.event.workflow_run.conclusion == 'success'
+      && github.event.workflow_run.head_branch == 'main'
     runs-on: ubuntu-latest
     steps:
       - name: Split commit message
         id: msg
         run: |
-          FULL="${{ github.event.head_commit.message }}"
+          FULL="${{ github.event.workflow_run.head_commit.message }}"
           TITLE=$(echo "$FULL" | head -1)
           BODY=$(echo "$FULL" | tail -n +3)
           echo "title=$TITLE" >> "$GITHUB_OUTPUT"
@@ -27,17 +30,18 @@ jobs:
       - name: Build message
         id: fmt
         run: |
+          COMMIT_URL="https://github.com/${{ github.repository }}/commit/${{ github.event.workflow_run.head_sha }}"
           BODY="${{ steps.msg.outputs.body }}"
           if [ -n "$BODY" ]; then
             MSG="<b>${{ steps.msg.outputs.title }}</b>
 
           $BODY
 
-          <a href=\"${{ github.event.head_commit.url }}\">View commit</a>"
+          <a href=\"${COMMIT_URL}\">View commit</a>"
           else
             MSG="<b>${{ steps.msg.outputs.title }}</b>
 
-          <a href=\"${{ github.event.head_commit.url }}\">View commit</a>"
+          <a href=\"${COMMIT_URL}\">View commit</a>"
           fi
           {
             echo "text<<EOF"
@@ -54,16 +58,32 @@ jobs:
           disable_web_page_preview: true
           message: ${{ steps.fmt.outputs.text }}
 
-  # ---- Release notification ----
+  # ---- Release notification (only after Release workflow passes) ----
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: >-
+      github.event.workflow_run.name == 'Release'
+      && github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Extract version
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from tag
         id: ver
-        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+        run: |
+          TAG=$(git describe --tags --exact-match "${{ github.event.workflow_run.head_sha }}" 2>/dev/null || echo "")
+          if [ -z "$TAG" ]; then
+            echo "No tag found for this commit, skipping"
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+            echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Send release to Telegram
+        if: steps.ver.outputs.found == 'true'
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -71,11 +91,11 @@ jobs:
           format: html
           disable_web_page_preview: true
           message: |
-            🚀 <b>New Release ${{ github.ref_name }}</b>
+            🚀 <b>New Release ${{ steps.ver.outputs.tag }}</b>
 
             Teleton ${{ steps.ver.outputs.version }} is now available on npm.
             Update your agents:
 
             <code>npm i -g teleton@latest</code>
 
-            <a href="https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}">View release</a>
+            <a href="https://github.com/${{ github.repository }}/releases/tag/${{ steps.ver.outputs.tag }}">View release</a>
