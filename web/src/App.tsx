@@ -11,6 +11,7 @@ import { Workspace } from './pages/Workspace';
 import { Tasks } from './pages/Tasks';
 import { Mcp } from './pages/Mcp';
 import { Config } from './pages/Config';
+import { Hooks } from './pages/Hooks';
 import { Setup } from './pages/Setup';
 import { SetupLayout } from './components/setup/SetupLayout';
 import { checkAuth, login } from './lib/api';
@@ -137,6 +138,7 @@ function AuthenticatedApp() {
             <Route path="tasks" element={<Tasks />} />
             <Route path="mcp" element={<Mcp />} />
             <Route path="config" element={<Config />} />
+            <Route path="hooks" element={<Hooks />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

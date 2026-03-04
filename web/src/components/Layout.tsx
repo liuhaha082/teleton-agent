@@ -23,6 +23,7 @@ function DashboardNav() {
         <Link to="/workspace" className={isActive('/workspace') ? 'active' : ''}>Workspace</Link>
         <Link to="/tasks" className={isActive('/tasks') ? 'active' : ''}>Tasks</Link>
         <Link to="/mcp" className={isActive('/mcp') ? 'active' : ''}>MCP</Link>
+        <Link to="/hooks" className={isActive('/hooks') ? 'active' : ''}>Hooks</Link>
         <Link to="/config" className={isActive('/config') ? 'active' : ''}>Config</Link>
       </nav>
       <div style={{ marginTop: 'auto' }}>

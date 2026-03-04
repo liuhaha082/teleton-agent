@@ -7,6 +7,7 @@ import type { Database } from "better-sqlite3";
 import type { PluginModule, PluginContext } from "../agent/tools/types.js";
 import type { SDKDependencies } from "../sdk/index.js";
 import type { AgentLifecycle } from "../agent/lifecycle.js";
+import type { UserHookEvaluator } from "../agent/hooks/user-hook-evaluator.js";
 
 export interface LoadedPlugin {
   name: string;
@@ -40,6 +41,7 @@ export interface WebUIServerDeps {
   configPath: string;
   lifecycle?: AgentLifecycle;
   marketplace?: MarketplaceDeps;
+  userHookEvaluator?: UserHookEvaluator | null;
 }
 
 // ── Marketplace types ───────────────────────────────────────────────

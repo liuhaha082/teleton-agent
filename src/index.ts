@@ -33,6 +33,7 @@ import {
   type McpConnection,
 } from "./agent/tools/mcp-loader.js";
 import { getErrorMessage } from "./utils/errors.js";
+import { UserHookEvaluator } from "./agent/hooks/user-hook-evaluator.js";
 import { createLogger, initLoggerFromConfig } from "./utils/logger.js";
 import { AgentLifecycle } from "./agent/lifecycle.js";
 import { InlineRouter } from "./bot/inline-router.js";
@@ -60,6 +61,7 @@ export class TeletonApp {
   private callbackHandlerRegistered = false;
   private lifecycle = new AgentLifecycle();
   private hookRunner?: ReturnType<typeof createHookRunner>;
+  private userHookEvaluator: UserHookEvaluator | null = null;
   private startTime: number = 0;
   private messagesProcessed: number = 0;
 
@@ -112,6 +114,9 @@ export class TeletonApp {
     });
 
     const db = getDatabase().getDb();
+
+    this.userHookEvaluator = new UserHookEvaluator(db);
+    this.agent.setUserHookEvaluator(this.userHookEvaluator);
 
     this.sdkDeps = { bridge: this.bridge };
 
@@ -228,6 +233,7 @@ ${blue}  ┌──────────────────────�
             loadedModuleNames: builtinNames,
             rewireHooks: () => this.wirePluginEventHooks(),
           },
+          userHookEvaluator: this.userHookEvaluator,
         });
         await this.webuiServer.start();
       } catch (error) {

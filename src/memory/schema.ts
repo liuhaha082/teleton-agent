@@ -291,6 +291,16 @@ export function ensureSchema(db: Database.Database): void {
     );
 
     -- =====================================================
+    -- USER HOOK CONFIG (Keyword Blocklist + Context Triggers)
+    -- =====================================================
+
+    CREATE TABLE IF NOT EXISTS user_hook_config (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL,
+      updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    -- =====================================================
     -- JOURNAL (Trading & Business Operations)
     -- =====================================================
     ${JOURNAL_SCHEMA}
@@ -342,7 +352,7 @@ export function setSchemaVersion(db: Database.Database, version: string): void {
   ).run(version);
 }
 
-export const CURRENT_SCHEMA_VERSION = "1.14.0";
+export const CURRENT_SCHEMA_VERSION = "1.15.0";
 
 export function runMigrations(db: Database.Database): void {
   const currentVersion = getSchemaVersion(db);
@@ -616,6 +626,23 @@ export function runMigrations(db: Database.Database): void {
       log.info("Migration 1.14.0 complete: plugin_config table created");
     } catch (error) {
       log.error({ err: error }, "Migration 1.14.0 failed");
+      throw error;
+    }
+  }
+
+  if (!currentVersion || versionLessThan(currentVersion, "1.15.0")) {
+    log.info("Running migration 1.15.0: Add user_hook_config table");
+    try {
+      db.exec(`
+        CREATE TABLE IF NOT EXISTS user_hook_config (
+          key TEXT PRIMARY KEY,
+          value TEXT NOT NULL,
+          updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+        );
+      `);
+      log.info("Migration 1.15.0 complete: user_hook_config table created");
+    } catch (error) {
+      log.error({ err: error }, "Migration 1.15.0 failed");
       throw error;
     }
   }

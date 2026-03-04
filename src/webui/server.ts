@@ -31,6 +31,7 @@ import { createWorkspaceRoutes } from "./routes/workspace.js";
 import { createTasksRoutes } from "./routes/tasks.js";
 import { createConfigRoutes } from "./routes/config.js";
 import { createMarketplaceRoutes } from "./routes/marketplace.js";
+import { createHooksRoutes } from "./routes/hooks.js";
 
 function findWebDist(): string | null {
   // Try common locations relative to CWD (where teleton is launched from)
@@ -206,6 +207,7 @@ export class WebUIServer {
     this.app.route("/api/tasks", createTasksRoutes(this.deps));
     this.app.route("/api/config", createConfigRoutes(this.deps));
     this.app.route("/api/marketplace", createMarketplaceRoutes(this.deps));
+    this.app.route("/api/hooks", createHooksRoutes(this.deps));
 
     // Agent lifecycle routes
     this.app.post("/api/agent/start", async (c) => {

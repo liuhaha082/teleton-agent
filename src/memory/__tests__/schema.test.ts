@@ -26,7 +26,7 @@ describe("Memory Schema", () => {
   // ============================================
 
   describe("Table Creation", () => {
-    it("creates all 14 core tables after initialization", () => {
+    it("creates all 15 core tables after initialization", () => {
       ensureSchema(db);
 
       const tables = db
@@ -1081,7 +1081,7 @@ describe("Memory Schema", () => {
     });
 
     it("CURRENT_SCHEMA_VERSION is set to expected value", () => {
-      expect(CURRENT_SCHEMA_VERSION).toBe("1.14.0");
+      expect(CURRENT_SCHEMA_VERSION).toBe("1.15.0");
     });
   });
 

@@ -598,6 +598,48 @@ export const api = {
     });
   },
 
+  // ── Hooks ─────────────────────────────────────────────────────────
+
+  async getBlocklist() {
+    return fetchAPI<APIResponse<{ enabled: boolean; keywords: string[]; message: string }>>('/hooks/blocklist');
+  },
+
+  async updateBlocklist(config: { enabled: boolean; keywords: string[]; message: string }) {
+    return fetchAPI<APIResponse<{ enabled: boolean; keywords: string[]; message: string }>>('/hooks/blocklist', {
+      method: 'PUT',
+      body: JSON.stringify(config),
+    });
+  },
+
+  async getTriggers() {
+    return fetchAPI<APIResponse<Array<{ id: string; keyword: string; context: string; enabled: boolean }>>>('/hooks/triggers');
+  },
+
+  async createTrigger(data: { keyword: string; context: string; enabled?: boolean }) {
+    return fetchAPI<APIResponse<{ id: string; keyword: string; context: string; enabled: boolean }>>('/hooks/triggers', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async updateTrigger(id: string, data: { keyword?: string; context?: string; enabled?: boolean }) {
+    return fetchAPI<APIResponse<{ id: string; keyword: string; context: string; enabled: boolean }>>(`/hooks/triggers/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
+
+  async deleteTrigger(id: string) {
+    return fetchAPI<APIResponse<null>>(`/hooks/triggers/${id}`, { method: 'DELETE' });
+  },
+
+  async toggleTrigger(id: string, enabled: boolean) {
+    return fetchAPI<APIResponse<{ id: string; enabled: boolean }>>(`/hooks/triggers/${id}/toggle`, {
+      method: 'PATCH',
+      body: JSON.stringify({ enabled }),
+    });
+  },
+
   connectLogs(onLog: (entry: LogEntry) => void, onError?: (error: Event) => void) {
     const url = `${API_BASE}/logs/stream`;
     const eventSource = new EventSource(url);

@@ -58,6 +58,7 @@ import { appendToDailyLog, writeSessionEndSummary } from "../memory/daily-logs.j
 import { saveSessionMemory } from "../session/memory-hook.js";
 import { createLogger } from "../utils/logger.js";
 import type { createHookRunner } from "../sdk/hooks/runner.js";
+import type { UserHookEvaluator } from "./hooks/user-hook-evaluator.js";
 import type {
   BeforeToolCallEvent,
   AfterToolCallEvent,
@@ -170,6 +171,7 @@ export class AgentRuntime {
   private toolRegistry: ToolRegistry | null = null;
   private embedder: EmbeddingProvider | null = null;
   private hookRunner?: ReturnType<typeof createHookRunner>;
+  private userHookEvaluator?: UserHookEvaluator;
 
   constructor(config: Config, soul?: string, toolRegistry?: ToolRegistry) {
     this.config = config;
@@ -195,6 +197,10 @@ export class AgentRuntime {
 
   setHookRunner(runner: ReturnType<typeof createHookRunner>): void {
     this.hookRunner = runner;
+  }
+
+  setUserHookEvaluator(evaluator: UserHookEvaluator): void {
+    this.userHookEvaluator = evaluator;
   }
 
   initializeContextBuilder(embedder: EmbeddingProvider, vectorEnabled: boolean): void {
@@ -228,6 +234,19 @@ export class AgentRuntime {
     const processStartTime = Date.now();
 
     try {
+      // User hooks: keyword blocklist + context injection (hot-reloadable, no restart)
+      let userHookContext = "";
+      if (this.userHookEvaluator) {
+        const hookResult = this.userHookEvaluator.evaluate(userMessage);
+        if (hookResult.blocked) {
+          log.info("Message blocked by keyword filter");
+          return { content: hookResult.blockMessage ?? "", toolCalls: [] };
+        }
+        if (hookResult.additionalContext) {
+          userHookContext = sanitizeForContext(hookResult.additionalContext);
+        }
+      }
+
       // Hook: message:receive — plugins can block, mutate text, inject context
       let effectiveMessage = userMessage;
       let hookMessageContext = "";
@@ -425,7 +444,7 @@ export class AgentRuntime {
         compactionConfig.memoryFlushEnabled &&
         context.messages.length > Math.floor((compactionConfig.maxMessages ?? 200) * 0.75);
 
-      const allHookContext = [hookAdditionalContext, hookMessageContext]
+      const allHookContext = [userHookContext, hookAdditionalContext, hookMessageContext]
         .filter(Boolean)
         .join("\n\n");
       const finalContext = additionalContext + (allHookContext ? `\n\n${allHookContext}` : "");
