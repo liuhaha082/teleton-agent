@@ -158,6 +158,19 @@ const _LoggingObject = z.object({
 });
 export const LoggingConfigSchema = _LoggingObject.default(_LoggingObject.parse({}));
 
+const _TonProxyObject = z.object({
+  enabled: z
+    .boolean()
+    .default(false)
+    .describe("Enable TON Proxy (Tonutils-Proxy) for .ton site access"),
+  port: z.number().min(1).max(65535).default(8080).describe("HTTP proxy port (default: 8080)"),
+  binary_path: z
+    .string()
+    .optional()
+    .describe("Custom path to tonutils-proxy-cli binary (auto-downloaded if omitted)"),
+});
+export const TonProxyConfigSchema = _TonProxyObject.default(_TonProxyObject.parse({}));
+
 const _DevObject = z.object({
   hot_reload: z
     .boolean()
@@ -266,6 +279,7 @@ export const ConfigSchema = z.object({
   dev: DevConfigSchema,
   tool_rag: ToolRagConfigSchema,
   capabilities: CapabilitiesConfigSchema,
+  ton_proxy: TonProxyConfigSchema,
   mcp: McpConfigSchema,
   plugins: z
     .record(z.string(), z.unknown())
@@ -310,4 +324,5 @@ export type McpConfig = z.infer<typeof McpConfigSchema>;
 export type ToolRagConfig = z.infer<typeof ToolRagConfigSchema>;
 export type McpServerConfig = z.infer<typeof McpServerSchema>;
 export type CapabilitiesConfig = z.infer<typeof CapabilitiesConfigSchema>;
+export type TonProxyConfig = z.infer<typeof TonProxyConfigSchema>;
 export type ExecConfig = z.infer<typeof _ExecObject>;
