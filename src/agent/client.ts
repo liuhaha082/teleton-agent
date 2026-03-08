@@ -280,7 +280,7 @@ export async function chatWithContext(
       response.errorMessage.toLowerCase().includes("unauthorized"))
   ) {
     log.warn("Claude Code token rejected (401), refreshing credentials and retrying...");
-    const refreshedKey = refreshClaudeCodeApiKey();
+    const refreshedKey = await refreshClaudeCodeApiKey();
     if (refreshedKey) {
       completeOptions.apiKey = refreshedKey;
       response = await complete(model, context, completeOptions as ProviderStreamOptions);
