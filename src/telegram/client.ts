@@ -265,8 +265,7 @@ export class TelegramUserClient {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- GramJS raw update event
-  addCallbackQueryHandler(handler: (event: any) => Promise<void>): void {
+  addCallbackQueryHandler(handler: (event: unknown) => Promise<void>): void {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises -- GramJS event handler accepts async
     this.client.addEventHandler(async (update) => {
       if (

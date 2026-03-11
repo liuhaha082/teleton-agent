@@ -1,6 +1,6 @@
 import type Database from "better-sqlite3";
 import type { EmbeddingProvider } from "../embeddings/provider.js";
-import { HybridSearch } from "./hybrid.js";
+import { HybridSearch, parseTemporalIntent } from "./hybrid.js";
 import { MessageStore } from "../feed/messages.js";
 import { createLogger } from "../../utils/logger.js";
 import { FEED_MESSAGE_MAX_CHARS } from "../../constants/limits.js";
@@ -101,9 +101,15 @@ export class ContextBuilder {
           })
       : Promise.resolve([] as { text: string }[]);
 
+    const { afterTimestamp } = parseTemporalIntent(query);
+
     const feedPromise = includeFeedHistory
       ? this.hybridSearch
-          .searchMessages(query, queryEmbedding, { chatId, limit: maxRelevantChunks })
+          .searchMessages(query, queryEmbedding, {
+            chatId,
+            limit: maxRelevantChunks,
+            afterTimestamp,
+          })
           .catch((error) => {
             log.warn({ err: error }, "Feed search failed");
             return [] as { text: string; source?: string }[];

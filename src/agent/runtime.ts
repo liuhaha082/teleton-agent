@@ -11,6 +11,7 @@ import {
   RATE_LIMIT_MAX_RETRIES,
   SERVER_ERROR_MAX_RETRIES,
   TOOL_CONCURRENCY_LIMIT,
+  EMBEDDING_QUERY_MAX_CHARS,
 } from "../constants/limits.js";
 import { TELEGRAM_SEND_TOOLS } from "../constants/tools.js";
 import {
@@ -363,7 +364,23 @@ export class AgentRuntime {
 
       if (this.embedder && isNonTrivial) {
         try {
-          queryEmbedding = await this.embedder.embedQuery(effectiveMessage);
+          // Enrich query with recent conversation context for better RAG retrieval
+          let searchQuery = effectiveMessage;
+          const recentUserMsgs = context.messages
+            .filter((m) => m.role === "user" && typeof m.content === "string")
+            .slice(-3)
+            .map((m) => {
+              const text = m.content as string;
+              const bodyMatch = text.match(/\] (.+)/s);
+              return (bodyMatch ? bodyMatch[1] : text).trim();
+            })
+            .filter((t) => t.length > 0);
+          if (recentUserMsgs.length > 0) {
+            searchQuery = recentUserMsgs.join(" ") + " " + effectiveMessage;
+          }
+          queryEmbedding = await this.embedder.embedQuery(
+            searchQuery.slice(0, EMBEDDING_QUERY_MAX_CHARS)
+          );
         } catch (error) {
           log.warn({ err: error }, "Embedding computation failed");
         }

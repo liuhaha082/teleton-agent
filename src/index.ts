@@ -366,14 +366,29 @@ ${blue}  ┌──────────────────────�
     }
 
     // Index knowledge base (MEMORY.md, memory/*.md)
-    const indexResult = await this.memory.knowledge.indexAll();
-
-    // Rebuild FTS indexes to ensure search works
+    // Force re-index if embedding dimensions changed (model switch)
     const db = getDatabase();
+    const forceReindex = db.didDimensionsChange();
+    const indexResult = await this.memory.knowledge.indexAll({ force: forceReindex });
     let ftsResult = { knowledge: 0, messages: 0 };
     if (indexResult.indexed > 0) {
       ftsResult = db.rebuildFtsIndexes();
     }
+
+    // Consolidate old session memory files (non-blocking — runs after startup)
+    import("./session/memory-hook.js")
+      .then(({ consolidateOldMemoryFiles }) =>
+        consolidateOldMemoryFiles({
+          apiKey: this.config.agent.api_key,
+          provider: this.config.agent.provider as SupportedProvider,
+          utilityModel: this.config.agent.utility_model,
+        })
+      )
+      .then((r) => {
+        if (r.consolidated > 0)
+          log.info(`🧹 Consolidated ${r.consolidated} old session memory files`);
+      })
+      .catch((error) => log.warn({ err: error }, "Memory consolidation skipped"));
 
     // Index tools for Tool RAG
     const toolIndex = this.toolRegistry.getToolIndex();
