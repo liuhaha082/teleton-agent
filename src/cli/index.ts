@@ -79,11 +79,25 @@ program
   .option("--json-credentials", "Output API credentials as JSON to stdout on start")
   .action(async (options) => {
     try {
-      // Check if config exists
+      // If --api flag and no config: start API-only bootstrap mode
+      if (options.api && !configExists(options.config)) {
+        if (options.apiPort) {
+          process.env.TELETON_API_PORT = options.apiPort;
+        }
+        if (options.jsonCredentials) {
+          process.env.TELETON_JSON_CREDENTIALS = "true";
+        }
+        const { startApiOnly } = await import("../api/bootstrap.js");
+        await startApiOnly({ config: options.config, apiPort: options.apiPort });
+        return;
+      }
+
+      // Normal flow: config required
       if (!configExists(options.config)) {
         console.error("❌ Configuration not found");
         console.error(`   Expected file: ${options.config}`);
         console.error("\n💡 Run first: teleton setup");
+        console.error("   Or use: teleton start --api (for API-only bootstrap)");
         process.exit(1);
       }
 

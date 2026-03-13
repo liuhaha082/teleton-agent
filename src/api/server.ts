@@ -9,6 +9,8 @@ import { randomBytes, createHash } from "node:crypto";
 import type { Server as HttpServer } from "node:http";
 
 import { HTTPException } from "hono/http-exception";
+import { existsSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { createLogger } from "../utils/logger.js";
 import { TELETON_ROOT } from "../workspace/paths.js";
 import { ensureTlsCert, type TlsCert } from "./tls.js";
@@ -62,6 +64,26 @@ function hashApiKey(key: string): string {
   return createHash("sha256").update(key).digest("hex");
 }
 
+/** Check setup completeness by probing key files */
+function getSetupStatus(): Record<string, boolean> {
+  return {
+    workspace: existsSync(join(TELETON_ROOT, "workspace")),
+    config: existsSync(join(TELETON_ROOT, "config.yaml")),
+    wallet: existsSync(join(TELETON_ROOT, "wallet.json")),
+    telegram_session: existsSync(join(TELETON_ROOT, "telegram_session.txt")),
+    embeddings_cached: (() => {
+      try {
+        return (
+          statSync(join(TELETON_ROOT, "models", "Xenova", "all-MiniLM-L6-v2", "onnx", "model.onnx"))
+            .size > 1_000_000
+        );
+      } catch {
+        return false;
+      }
+    })(),
+  };
+}
+
 /** SSE path patterns that must be excluded from timeout middleware */
 const SSE_PATHS = ["/v1/agent/events", "/v1/logs/stream"];
 
@@ -92,6 +114,11 @@ export class ApiServer {
       this.apiKey = generateApiKey();
       this.keyHash = hashApiKey(this.apiKey);
     }
+  }
+
+  /** Get current API key hash (for persisting in config) */
+  getKeyHash(): string {
+    return this.keyHash;
   }
 
   /** Update live deps (e.g., when agent starts/stops) */
@@ -160,7 +187,10 @@ export class ApiServer {
       if (state === "running") {
         return c.json({ status: "ready", state });
       }
-      return c.json({ status: "not_ready", state }, 503);
+
+      // Include setup completeness when agent is not running
+      const setup = getSetupStatus();
+      return c.json({ status: "not_ready", state, setup }, 503);
     });
 
     // Auth middleware for /v1/* routes
@@ -209,8 +239,8 @@ export class ApiServer {
     this.app.route("/v1/hooks", createHooksRoutes(adaptedDeps));
     this.app.route("/v1/ton-proxy", createTonProxyRoutes(adaptedDeps));
 
-    // Setup routes (no agent deps needed)
-    this.app.route("/v1/setup", createSetupRoutes());
+    // Setup routes (no agent deps needed, keyHash for config persistence)
+    this.app.route("/v1/setup", createSetupRoutes({ keyHash: this.keyHash }));
 
     // Agent lifecycle routes (inline, same pattern as WebUI)
     this.app.post("/v1/agent/start", async (c) => {

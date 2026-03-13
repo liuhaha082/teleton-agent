@@ -158,6 +158,57 @@ export class TeletonApp {
     return this.lifecycle;
   }
 
+  // --- Public accessors for API-only bootstrap mode ---
+
+  getAgent(): AgentRuntime {
+    return this.agent;
+  }
+
+  getBridge(): TelegramBridge {
+    return this.bridge;
+  }
+
+  getMemory(): MemorySystem {
+    return this.memory;
+  }
+
+  getToolRegistry(): ToolRegistry {
+    return this.toolRegistry;
+  }
+
+  getPlugins(): { name: string; version: string }[] {
+    return this.modules
+      .filter((m) => this.toolRegistry.isPluginModule(m.name))
+      .map((m) => ({ name: m.name, version: m.version ?? "0.0.0" }));
+  }
+
+  getWebuiConfig() {
+    return this.config.webui;
+  }
+
+  getConfigPath(): string {
+    return this.configPath;
+  }
+
+  /** Start agent subsystems without WebUI/API servers. For bootstrap mode. */
+  async startAgentSubsystems(): Promise<void> {
+    this.lifecycle.registerCallbacks(
+      () => this.startAgent(),
+      () => this.stopAgent()
+    );
+    await this.lifecycle.start();
+  }
+
+  /** Stop agent subsystems and close database. For bootstrap mode. */
+  async stopAgentSubsystems(): Promise<void> {
+    await this.lifecycle.stop();
+    try {
+      closeDatabase();
+    } catch (e) {
+      log.error({ err: e }, "Database close failed");
+    }
+  }
+
   /**
    * Start the agent
    */
