@@ -42,6 +42,7 @@ import { PluginRateLimiter } from "./bot/rate-limiter.js";
 import { setBotPreMiddleware, getDealBot } from "./deals/module.js";
 import type { TaskDependencyResolver } from "./telegram/task-dependency-resolver.js";
 import type { WebUIServer } from "./webui/server.js";
+import type { ApiServer } from "./api/server.js";
 
 const log = createLogger("App");
 
@@ -59,6 +60,7 @@ export class TeletonApp {
   private memory: MemorySystem;
   private sdkDeps: SDKDependencies;
   private webuiServer: WebUIServer | null = null;
+  private apiServer: ApiServer | null = null;
   private pluginWatcher: PluginWatcher | null = null;
   private mcpConnections: McpConnection[] = [];
   private callbackHandlerRegistered = false;
@@ -243,6 +245,80 @@ ${blue}  ┌──────────────────────�
       } catch (error) {
         log.error({ err: error }, "❌ Failed to start WebUI server");
         log.warn("⚠️ Continuing without WebUI...");
+      }
+    }
+
+    // Start Management API server if enabled (before agent — survives agent stop/restart)
+    if (this.config.api?.enabled) {
+      try {
+        const { ApiServer: ApiServerClass } = await import("./api/server.js");
+        // Build MCP server info getter (same pattern as WebUI)
+        const mcpServers = () =>
+          Object.entries(this.config.mcp.servers).map(([name, serverConfig]) => {
+            const type = serverConfig.command
+              ? ("stdio" as const)
+              : serverConfig.url
+                ? ("streamable-http" as const)
+                : ("sse" as const);
+            const target = serverConfig.command ?? serverConfig.url ?? "";
+            const connected = this.mcpConnections.some((c) => c.serverName === name);
+            const moduleName = `mcp_${name}`;
+            const moduleTools = this.toolRegistry.getModuleTools(moduleName);
+            return {
+              name,
+              type,
+              target,
+              scope: serverConfig.scope ?? "always",
+              enabled: serverConfig.enabled ?? true,
+              connected,
+              toolCount: moduleTools.length,
+              tools: moduleTools.map((t) => t.name),
+              envKeys: Object.keys(serverConfig.env ?? {}),
+            };
+          });
+
+        const builtinNames = this.modules.map((m) => m.name);
+        const pluginContext: PluginContext = {
+          bridge: this.bridge,
+          db: getDatabase().getDb(),
+          config: this.config,
+        };
+
+        this.apiServer = new ApiServerClass(
+          {
+            agent: this.agent,
+            bridge: this.bridge,
+            memory: this.memory,
+            toolRegistry: this.toolRegistry,
+            plugins: this.modules
+              .filter((m) => this.toolRegistry.isPluginModule(m.name))
+              .map((m) => ({ name: m.name, version: m.version ?? "0.0.0" })),
+            mcpServers,
+            config: this.config.webui,
+            configPath: this.configPath,
+            lifecycle: this.lifecycle,
+            marketplace: {
+              modules: this.modules,
+              config: this.config,
+              sdkDeps: this.sdkDeps,
+              pluginContext,
+              loadedModuleNames: builtinNames,
+              rewireHooks: () => this.wirePluginEventHooks(),
+            },
+            userHookEvaluator: this.userHookEvaluator,
+          },
+          this.config.api
+        );
+        await this.apiServer.start();
+
+        // Output credentials if requested via --json-credentials flag
+        if (process.env.TELETON_JSON_CREDENTIALS === "true") {
+          const creds = this.apiServer.getCredentials();
+          process.stdout.write(JSON.stringify(creds) + "\n");
+        }
+      } catch (error) {
+        log.error({ err: error }, "Failed to start Management API server");
+        log.warn("Continuing without Management API...");
       }
     }
 
@@ -1053,6 +1129,15 @@ ${blue}  ┌──────────────────────�
         await this.webuiServer.stop();
       } catch (e) {
         log.error({ err: e }, "⚠️ WebUI stop failed");
+      }
+    }
+
+    // Stop Management API server (if running)
+    if (this.apiServer) {
+      try {
+        await this.apiServer.stop();
+      } catch (e) {
+        log.error({ err: e }, "⚠️ Management API stop failed");
       }
     }
 

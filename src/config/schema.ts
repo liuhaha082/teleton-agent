@@ -179,6 +179,20 @@ const _DevObject = z.object({
 });
 export const DevConfigSchema = _DevObject.default(_DevObject.parse({}));
 
+const _ApiObject = z.object({
+  enabled: z.boolean().default(false).describe("Enable HTTPS Management API server"),
+  port: z.number().min(1).max(65535).default(7778).describe("HTTPS server port"),
+  key_hash: z
+    .string()
+    .default("")
+    .describe("SHA-256 hash of the API key (auto-generated if empty)"),
+  allowed_ips: z
+    .array(z.string())
+    .default([])
+    .describe("IP whitelist (empty = allow all authenticated requests)"),
+});
+export const ApiConfigSchema = _ApiObject.default(_ApiObject.parse({}));
+
 const McpServerSchema = z
   .object({
     command: z
@@ -279,6 +293,7 @@ export const ConfigSchema = z.object({
   dev: DevConfigSchema,
   tool_rag: ToolRagConfigSchema,
   capabilities: CapabilitiesConfigSchema,
+  api: ApiConfigSchema.optional(),
   ton_proxy: TonProxyConfigSchema,
   mcp: McpConfigSchema,
   plugins: z
@@ -325,4 +340,5 @@ export type ToolRagConfig = z.infer<typeof ToolRagConfigSchema>;
 export type McpServerConfig = z.infer<typeof McpServerSchema>;
 export type CapabilitiesConfig = z.infer<typeof CapabilitiesConfigSchema>;
 export type TonProxyConfig = z.infer<typeof TonProxyConfigSchema>;
+export type ApiConfig = z.infer<typeof _ApiObject>;
 export type ExecConfig = z.infer<typeof _ExecObject>;

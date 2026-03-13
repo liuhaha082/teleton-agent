@@ -3,6 +3,7 @@ import { onboardCommand } from "./commands/onboard.js";
 import { doctorCommand } from "./commands/doctor.js";
 import { mcpAddCommand, mcpRemoveCommand, mcpListCommand } from "./commands/mcp.js";
 import { configCommand } from "./commands/config.js";
+import { apiRotateKeyCommand, apiFingerprintCommand } from "./commands/api.js";
 import { main as startApp } from "../index.js";
 import { configExists, getDefaultConfigPath } from "../config/loader.js";
 import { readFileSync, existsSync } from "fs";
@@ -73,6 +74,9 @@ program
   .option("-c, --config <path>", "Config file path", getDefaultConfigPath())
   .option("--webui", "Enable WebUI server (overrides config)")
   .option("--webui-port <port>", "WebUI server port (default: 7777)")
+  .option("--api", "Enable Management API server (overrides config)")
+  .option("--api-port <port>", "Management API port (default: 7778)")
+  .option("--json-credentials", "Output API credentials as JSON to stdout on start")
   .action(async (options) => {
     try {
       // Check if config exists
@@ -89,6 +93,17 @@ program
       }
       if (options.webuiPort) {
         process.env.TELETON_WEBUI_PORT = options.webuiPort;
+      }
+
+      // Set environment variables for API flags (will be picked up by config loader)
+      if (options.api) {
+        process.env.TELETON_API_ENABLED = "true";
+      }
+      if (options.apiPort) {
+        process.env.TELETON_API_PORT = options.apiPort;
+      }
+      if (options.jsonCredentials) {
+        process.env.TELETON_JSON_CREDENTIALS = "true";
       }
 
       await startApp(options.config);
@@ -174,6 +189,32 @@ program
   .action(async (action: string, key: string | undefined, value: string | undefined, options) => {
     try {
       await configCommand(action, key, value, options);
+    } catch (error) {
+      console.error("Error:", getErrorMessage(error));
+      process.exit(1);
+    }
+  });
+
+// Management API commands
+program
+  .command("api-rotate-key")
+  .description("Generate a new Management API key")
+  .option("-c, --config <path>", "Config file path", getDefaultConfigPath())
+  .action(async (options) => {
+    try {
+      await apiRotateKeyCommand({ config: options.config });
+    } catch (error) {
+      console.error("Error:", getErrorMessage(error));
+      process.exit(1);
+    }
+  });
+
+program
+  .command("api-fingerprint")
+  .description("Show TLS certificate fingerprint")
+  .action(async () => {
+    try {
+      await apiFingerprintCommand();
     } catch (error) {
       console.error("Error:", getErrorMessage(error));
       process.exit(1);
