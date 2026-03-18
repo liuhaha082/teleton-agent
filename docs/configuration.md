@@ -313,8 +313,8 @@ Semantic tool retrieval configuration. When enabled, the agent uses embedding-ba
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `tool_rag.enabled` | `boolean` | `true` | Enable semantic tool retrieval (Tool RAG). |
-| `tool_rag.top_k` | `number` | `25` | Maximum number of tools to retrieve per LLM call. |
-| `tool_rag.always_include` | `string[]` | `["telegram_send_message", "telegram_reply_message", "telegram_send_photo", "telegram_send_document", "journal_*", "workspace_*", "web_*"]` | Tool name patterns always included regardless of relevance score. Supports prefix glob with `*`. |
+| `tool_rag.top_k` | `number` | `35` | Maximum number of tools to retrieve per LLM call. |
+| `tool_rag.always_include` | `string[]` | `["telegram_send_message", "telegram_quote_reply", "telegram_send_photo", "journal_*", "workspace_*"]` | Tool name patterns always included regardless of relevance score. Supports prefix glob with `*`. |
 | `tool_rag.skip_unlimited_providers` | `boolean` | `false` | Skip Tool RAG for providers with no tool limit (e.g., Anthropic). When `true`, all tools are sent to those providers. |
 
 ### Example
@@ -322,12 +322,13 @@ Semantic tool retrieval configuration. When enabled, the agent uses embedding-ba
 ```yaml
 tool_rag:
   enabled: true
-  top_k: 25
+  top_k: 35
   always_include:
     - "telegram_send_message"
-    - "telegram_reply_message"
+    - "telegram_quote_reply"
+    - "telegram_send_photo"
     - "journal_*"
-    - "web_*"
+    - "workspace_*"
   skip_unlimited_providers: false
 ```
 

@@ -157,6 +157,10 @@ agent:
   model: "claude-opus-4-6"
   utility_model: "claude-haiku-4-5-20251001"  # for summarization, compaction, vision
   max_agentic_iterations: 5
+  session_reset_policy:
+    daily_reset_enabled: true
+    daily_reset_hour: 4
+    idle_expiry_minutes: 1440  # 24h idle → new session
 
 telegram:
   dm_policy: "admin-only"   # open | allowlist | admin-only | disabled
@@ -170,11 +174,6 @@ telegram:
   # Optional: inline bot for interactive features (deals)
   bot_token: "123456:ABC-DEF..."
   bot_username: "your_bot"
-
-  session_reset_policy:
-    daily_reset_enabled: true
-    daily_reset_hour: 4
-    idle_expiry_minutes: 1440  # 24h idle → new session
 
 webui:                       # Optional: Web dashboard
   enabled: false             # Enable WebUI server

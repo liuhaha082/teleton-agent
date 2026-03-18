@@ -159,9 +159,9 @@ The `dm_policy` setting controls who can interact with the agent via direct mess
 
 | Policy | Behavior | Use Case |
 |--------|----------|----------|
-| `"pairing"` | Users must mutually pair with the agent before interaction. The agent and user must both consent. | **Default**. Recommended for most deployments. Prevents spam. |
+| `"pairing"` | Users must mutually pair with the agent before interaction. The agent and user must both consent. | Recommended for public deployments. Prevents spam. |
 | `"allowlist"` | Only user IDs listed in `allow_from` can send DMs. | Restricted access for known users. |
-| `"open"` | Anyone can DM the agent. | Public-facing agents. Use with caution -- can lead to high API costs. |
+| `"open"` | Anyone can DM the agent. | **Default**. Public-facing agents. Use with caution -- can lead to high API costs. |
 | `"disabled"` | All DMs are ignored. | Group-only deployments. |
 
 ### Allowlist Example
