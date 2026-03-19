@@ -315,10 +315,8 @@ export class MessageHandler {
       this.recentMessageIds = new Set(ids.slice(ids.length >> 1));
     }
 
-    const requestId = crypto.randomUUID().slice(0, 8);
     const msgType = message.isGroup ? "group" : message.isChannel ? "channel" : "dm";
     log.debug(
-      { requestId },
       `📨 [Handler] Received ${msgType} message ${message.id} from ${message.senderId} (mentions: ${message.mentionsMe})`
     );
 
@@ -361,38 +359,33 @@ export class MessageHandler {
           message.chatId.length > 10
             ? message.chatId.slice(0, 7) + ".." + message.chatId.slice(-2)
             : message.chatId;
-        log.info({ requestId }, `⏭️  Group ${chatShort} msg:${message.id} (not mentioned)`);
+        log.info(`⏭️  Group ${chatShort} msg:${message.id} (not mentioned)`);
       } else {
-        log.debug(
-          { requestId },
-          `Skipping message ${message.id} from ${message.senderId}: ${context.reason}`
-        );
+        log.debug(`Skipping message ${message.id} from ${message.senderId}: ${context.reason}`);
       }
       return;
     }
 
     // 3. Check rate limits
     if (!this.rateLimiter.canSendMessage()) {
-      log.debug({ requestId }, "Rate limit reached, skipping message");
+      log.debug("Rate limit reached, skipping message");
       return;
     }
 
     if (message.isGroup && !this.rateLimiter.canSendToGroup(message.chatId)) {
-      log.debug({ requestId }, `Group rate limit reached for ${message.chatId}`);
+      log.debug(`Group rate limit reached for ${message.chatId}`);
       return;
     }
 
     // Enqueue for serial processing — messages wait their turn per chat
     await this.chatQueue.enqueue(message.chatId, async () => {
+      const requestId = crypto.randomUUID().slice(0, 8);
       try {
         // Re-check offset after queue wait to prevent duplicate processing
         // (GramJS may fire duplicate NewMessage events during reconnection)
         const postQueueOffset = readOffset(message.chatId) ?? 0;
         if (message.id <= postQueueOffset) {
-          log.debug(
-            { requestId },
-            `Skipping message ${message.id} (already processed after queue wait)`
-          );
+          log.debug(`Skipping message ${message.id} (already processed after queue wait)`);
           return;
         }
 
