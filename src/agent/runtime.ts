@@ -92,6 +92,7 @@ export interface ProcessMessageOptions {
   messageId?: number;
   replyContext?: { senderName?: string; text: string; isAgent?: boolean };
   isHeartbeat?: boolean;
+  requestId?: string;
 }
 
 export interface AgentResponse {

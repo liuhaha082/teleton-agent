@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import {
-  readFileSync,
   writeFileSync,
   mkdirSync,
   rmSync,
@@ -9,6 +8,7 @@ import {
   statSync,
   existsSync,
 } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import type { WebUIServerDeps, APIResponse } from "../types.js";
 import { WORKSPACE_ROOT } from "../../workspace/paths.js";
@@ -181,7 +181,7 @@ export function createWorkspaceRoutes(_deps: WebUIServerDeps) {
   });
 
   // Serve raw image file with correct MIME type
-  app.get("/raw", (c) => {
+  app.get("/raw", async (c) => {
     try {
       const path = c.req.query("path");
       if (!path) {
@@ -211,7 +211,7 @@ export function createWorkspaceRoutes(_deps: WebUIServerDeps) {
         return c.json(response, 413);
       }
 
-      const buffer = readFileSync(validated.absolutePath);
+      const buffer = await readFile(validated.absolutePath);
 
       const headers: Record<string, string> = {
         "Content-Type": mime,
@@ -232,7 +232,7 @@ export function createWorkspaceRoutes(_deps: WebUIServerDeps) {
   });
 
   // Read file content
-  app.get("/read", (c) => {
+  app.get("/read", async (c) => {
     try {
       const path = c.req.query("path");
       if (!path) {
@@ -249,7 +249,7 @@ export function createWorkspaceRoutes(_deps: WebUIServerDeps) {
         return c.json(response, 413);
       }
 
-      const content = readFileSync(validated.absolutePath, "utf-8");
+      const content = await readFile(validated.absolutePath, "utf-8");
 
       const response: APIResponse<{ content: string; size: number }> = {
         success: true,

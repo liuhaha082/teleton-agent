@@ -5,7 +5,8 @@ import { streamSSE } from "hono/streaming";
 import { bodyLimit } from "hono/body-limit";
 import { setCookie, getCookie, deleteCookie } from "hono/cookie";
 import type { Server as HttpServer } from "node:http";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { join, dirname, resolve, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { WebUIServerDeps } from "./types.js";
@@ -323,7 +324,7 @@ export class WebUIServer {
     // Serve static files in production (if built)
     const webDist = findWebDist();
     if (webDist) {
-      const indexHtml = readFileSync(join(webDist, "index.html"), "utf-8");
+      const indexHtml = readFile(join(webDist, "index.html"), "utf-8");
 
       const mimeTypes: Record<string, string> = {
         js: "application/javascript",
@@ -339,17 +340,17 @@ export class WebUIServer {
       };
 
       // Serve static files (assets, images, etc.) with SPA fallback
-      this.app.get("*", (c) => {
+      this.app.get("*", async (c) => {
         const filePath = resolve(join(webDist, c.req.path));
         // Prevent path traversal — resolved path must stay inside webDist
         const rel = relative(webDist, filePath);
         if (rel.startsWith("..") || resolve(filePath) !== filePath) {
-          return c.html(indexHtml);
+          return c.html(await indexHtml);
         }
 
         // Try serving the actual file
         try {
-          const content = readFileSync(filePath);
+          const content = await readFile(filePath);
           const ext = filePath.split(".").pop() || "";
           if (mimeTypes[ext]) {
             const immutable = c.req.path.startsWith("/assets/");
@@ -365,7 +366,7 @@ export class WebUIServer {
         }
 
         // SPA fallback: serve index.html for all non-file routes
-        return c.html(indexHtml);
+        return c.html(await indexHtml);
       });
     }
 

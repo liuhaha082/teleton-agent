@@ -1,5 +1,4 @@
 import type { TelegramBridge } from "../bridge.js";
-import type Database from "better-sqlite3";
 import { createLogger } from "../../utils/logger.js";
 
 const log = createLogger("Telegram");
@@ -16,10 +15,7 @@ export type CallbackHandler = (data: {
 export class CallbackQueryHandler {
   private handlers: Map<string, CallbackHandler> = new Map();
 
-  constructor(
-    private bridge: TelegramBridge,
-    private db: Database.Database
-  ) {}
+  constructor(private bridge: TelegramBridge) {}
 
   register(actionPrefix: string, handler: CallbackHandler): void {
     this.handlers.set(actionPrefix, handler);

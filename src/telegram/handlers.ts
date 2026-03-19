@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import type { TelegramConfig, Config } from "../config/schema.js";
 import type { AgentRuntime } from "../agent/runtime.js";
 import type { TelegramBridge } from "./bridge.js";
@@ -76,19 +77,48 @@ class RateLimiter {
 
 class ChatQueue {
   private chains = new Map<string, Promise<void>>();
+  private activeTasks = 0;
+  private maxConcurrent: number;
+  private waitQueue: Array<() => void> = [];
+
+  constructor(maxConcurrent = 10) {
+    this.maxConcurrent = maxConcurrent;
+  }
+
+  private async acquireSlot(chatId: string): Promise<void> {
+    if (this.activeTasks < this.maxConcurrent) {
+      this.activeTasks++;
+      return;
+    }
+    log.warn(`Backpressure: chat ${chatId} queued (${this.activeTasks}/${this.maxConcurrent} active)`);
+    return new Promise<void>((resolve) => {
+      this.waitQueue.push(() => {
+        this.activeTasks++;
+        resolve();
+      });
+    });
+  }
+
+  private releaseSlot(): void {
+    this.activeTasks--;
+    const next = this.waitQueue.shift();
+    if (next) next();
+  }
 
   enqueue(chatId: string, task: () => Promise<void>): Promise<void> {
     const prev = this.chains.get(chatId) ?? Promise.resolve();
     const next = prev
-      .then(task, () => task())
+      .then(
+        () => this.acquireSlot(chatId).then(task),
+        () => this.acquireSlot(chatId).then(task)
+      )
       .finally(() => {
-        // Auto-cleanup: remove entry if this is still the tail of the chain
+        this.releaseSlot();
         if (this.chains.get(chatId) === next) {
           this.chains.delete(chatId);
         }
       });
 
-    // Register as new tail BEFORE awaiting (atomic in single-threaded JS)
     this.chains.set(chatId, next);
     return next;
   }
@@ -237,7 +267,7 @@ export class MessageHandler {
           }
           break;
         case "allowlist":
-          if (!this.config.group_allow_from.includes(parseInt(message.chatId))) {
+          if (!this.config.group_allow_from.includes(parseInt(message.chatId, 10))) {
             return {
               message,
               isAdmin,
@@ -283,8 +313,10 @@ export class MessageHandler {
       this.recentMessageIds = new Set(ids.slice(ids.length >> 1));
     }
 
+    const requestId = crypto.randomUUID().slice(0, 8);
     const msgType = message.isGroup ? "group" : message.isChannel ? "channel" : "dm";
     log.debug(
+      { requestId },
       `📨 [Handler] Received ${msgType} message ${message.id} from ${message.senderId} (mentions: ${message.mentionsMe})`
     );
 
@@ -327,21 +359,21 @@ export class MessageHandler {
           message.chatId.length > 10
             ? message.chatId.slice(0, 7) + ".." + message.chatId.slice(-2)
             : message.chatId;
-        log.info(`⏭️  Group ${chatShort} msg:${message.id} (not mentioned)`);
+        log.info({ requestId }, `⏭️  Group ${chatShort} msg:${message.id} (not mentioned)`);
       } else {
-        log.debug(`Skipping message ${message.id} from ${message.senderId}: ${context.reason}`);
+        log.debug({ requestId }, `Skipping message ${message.id} from ${message.senderId}: ${context.reason}`);
       }
       return;
     }
 
     // 3. Check rate limits
     if (!this.rateLimiter.canSendMessage()) {
-      log.debug("Rate limit reached, skipping message");
+      log.debug({ requestId }, "Rate limit reached, skipping message");
       return;
     }
 
     if (message.isGroup && !this.rateLimiter.canSendToGroup(message.chatId)) {
-      log.debug(`Group rate limit reached for ${message.chatId}`);
+      log.debug({ requestId }, `Group rate limit reached for ${message.chatId}`);
       return;
     }
 
@@ -352,7 +384,7 @@ export class MessageHandler {
         // (GramJS may fire duplicate NewMessage events during reconnection)
         const postQueueOffset = readOffset(message.chatId) ?? 0;
         if (message.id <= postQueueOffset) {
-          log.debug(`Skipping message ${message.id} (already processed after queue wait)`);
+          log.debug({ requestId }, `Skipping message ${message.id} (already processed after queue wait)`);
           return;
         }
 
@@ -400,11 +432,12 @@ export class MessageHandler {
               if (transcribeResult.success && transcribeData?.text) {
                 transcriptionText = transcribeData.text as string;
                 log.info(
+                  { requestId },
                   `🎤 Auto-transcribed voice msg ${message.id}: "${transcriptionText?.substring(0, 80)}..."`
                 );
               }
             } catch (err) {
-              log.warn({ err }, `Failed to auto-transcribe voice message ${message.id}`);
+              log.warn({ err, requestId }, `Failed to auto-transcribe voice message ${message.id}`);
             }
           }
 
@@ -437,6 +470,7 @@ export class MessageHandler {
             mediaType: message.mediaType,
             messageId: message.id,
             replyContext,
+            requestId,
           });
 
           // 8. Handle response based on whether tools were used
@@ -447,7 +481,7 @@ export class MessageHandler {
             hasToolCalls && response.toolCalls?.some((tc) => TELEGRAM_SEND_TOOLS.has(tc.name));
 
           if (isSilentReply(response.content)) {
-            log.debug("Silent reply suppressed");
+            log.debug({ requestId }, "Silent reply suppressed");
           } else if (
             !telegramSendCalled &&
             response.content &&
@@ -472,7 +506,7 @@ export class MessageHandler {
               {
                 id: sentMessage.id,
                 chatId: message.chatId,
-                senderId: this.ownUserId ? parseInt(this.ownUserId) : 0,
+                senderId: this.ownUserId ? parseInt(this.ownUserId, 10) : 0,
                 text: responseText,
                 isGroup: message.isGroup,
                 isChannel: message.isChannel,
@@ -496,9 +530,9 @@ export class MessageHandler {
           if (typingInterval) clearInterval(typingInterval);
         }
 
-        log.debug(`Processed message ${message.id} in chat ${message.chatId}`);
+        log.debug({ requestId }, `Processed message ${message.id} in chat ${message.chatId}`);
       } catch (error) {
-        log.error({ err: error }, "Error handling message");
+        log.error({ err: error, requestId }, "Error handling message");
       }
     });
   }
