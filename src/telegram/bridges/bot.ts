@@ -55,6 +55,7 @@ export class GrammyBotBridge implements ITelegramBridge {
   startPolling(): void {
     this.botPromise = this.bot
       .start({
+        drop_pending_updates: true,
         onStart: () => {
           log.info("Grammy bot polling started");
         },
