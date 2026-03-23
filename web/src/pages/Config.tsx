@@ -219,23 +219,23 @@ export function Config() {
                 inline
               />
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <label className="toggle" style={{ margin: 0 }}>
-                    <input
-                      type="checkbox"
-                      checked={config.getLocal('heartbeat.self_configurable') === 'true' || config.getLocal('heartbeat.self_configurable') === true}
-                      onChange={async (e) => {
-                        const val = e.target.checked;
-                        await config.saveConfig('heartbeat.self_configurable', String(val));
-                      }}
-                    />
-                    <span className="toggle-track" />
-                    <span className="toggle-thumb" />
-                  </label>
                   <span>Self-configurable</span>
                   <InfoTip text="Allow the agent to modify its own heartbeat settings (interval, prompt). When off, only the admin can change these." />
                 </div>
+                <label className="toggle" style={{ margin: 0 }}>
+                  <input
+                    type="checkbox"
+                    checked={config.getLocal('heartbeat.self_configurable') === 'true' || config.getLocal('heartbeat.self_configurable') === true}
+                    onChange={async (e) => {
+                      const val = e.target.checked;
+                      await config.saveConfig('heartbeat.self_configurable', String(val));
+                    }}
+                  />
+                  <span className="toggle-track" />
+                  <span className="toggle-thumb" />
+                </label>
               </div>
             </div>
           </div>
@@ -266,7 +266,53 @@ export function Config() {
       {activeTab === 'ton-proxy' && (
         <>
           <div className="card-header">
-            <div className="section-title">TON Proxy</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div className="section-title" style={{ margin: 0 }}>TON Proxy</div>
+              <label className="toggle" style={{ margin: 0 }}>
+                <input
+                  type="checkbox"
+                  disabled={proxyLoading}
+                  checked={proxyStatus?.enabled ?? config.getLocal('ton_proxy.enabled') === 'true'}
+                  onChange={async (e) => {
+                    const enable = e.target.checked;
+                    setProxyLoading(true);
+                    setProxyError(null);
+                    try {
+                      const res = enable
+                        ? await api.startTonProxy()
+                        : await api.stopTonProxy();
+                      setProxyStatus(res.data);
+                      loadKeys();
+                    } catch (err) {
+                      setProxyError(err instanceof Error ? err.message : String(err));
+                    } finally {
+                      setProxyLoading(false);
+                    }
+                  }}
+                />
+                <span className="toggle-track" />
+                <span className="toggle-thumb" />
+              </label>
+              {proxyLoading && (
+                <span style={{ fontSize: 12, color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span className="spinner" style={{
+                    display: 'inline-block',
+                    width: 14,
+                    height: 14,
+                    border: '2px solid var(--border)',
+                    borderTopColor: 'var(--accent)',
+                    borderRadius: '50%',
+                    animation: 'spin 0.8s linear infinite',
+                  }} />
+                  {proxyStatus?.installed === false ? 'Downloading...' : 'Starting...'}
+                </span>
+              )}
+              {!proxyLoading && proxyStatus?.running && (
+                <span style={{ fontSize: 12, color: 'var(--green)' }}>
+                  Running (PID {proxyStatus.pid})
+                </span>
+              )}
+            </div>
           </div>
           <InfoBanner>
             Tonutils-Proxy gateway for accessing .ton websites. The binary is auto-downloaded from GitHub on first enable.
@@ -282,57 +328,9 @@ export function Config() {
             )}
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {/* Top row: toggle left, uninstall right */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <label className="toggle" style={{ margin: 0 }}>
-                    <input
-                      type="checkbox"
-                      disabled={proxyLoading}
-                      checked={proxyStatus?.enabled ?? config.getLocal('ton_proxy.enabled') === 'true'}
-                      onChange={async (e) => {
-                        const enable = e.target.checked;
-                        setProxyLoading(true);
-                        setProxyError(null);
-                        try {
-                          const res = enable
-                            ? await api.startTonProxy()
-                            : await api.stopTonProxy();
-                          setProxyStatus(res.data);
-                          loadKeys();
-                        } catch (err) {
-                          setProxyError(err instanceof Error ? err.message : String(err));
-                        } finally {
-                          setProxyLoading(false);
-                        }
-                      }}
-                    />
-                    <span className="toggle-track" />
-                    <span className="toggle-thumb" />
-                  </label>
-                  <span>Enabled</span>
-                  {proxyLoading && (
-                    <span style={{ fontSize: '12px', color: 'var(--text-secondary)', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                      <span className="spinner" style={{
-                        display: 'inline-block',
-                        width: 14,
-                        height: 14,
-                        border: '2px solid var(--border)',
-                        borderTopColor: 'var(--accent)',
-                        borderRadius: '50%',
-                        animation: 'spin 0.8s linear infinite',
-                      }} />
-                      {proxyStatus?.installed === false ? 'Downloading binary...' : 'Starting...'}
-                    </span>
-                  )}
-                  {!proxyLoading && proxyStatus?.running && (
-                    <span style={{ fontSize: '12px', color: 'var(--green)' }}>
-                      Running (PID {proxyStatus.pid})
-                    </span>
-                  )}
-                  <InfoTip text="Enable TON Proxy - auto-downloads the binary if not found" />
-                </div>
-                {!(proxyStatus?.enabled) && (
+              {/* Uninstall button */}
+              {!(proxyStatus?.enabled) && (
+                <div>
                   <button
                     disabled={proxyLoading || !proxyStatus?.installed}
                     onClick={async () => {
@@ -363,8 +361,8 @@ export function Config() {
                   >
                     Uninstall
                   </button>
-                )}
-              </div>
+                </div>
+              )}
 
               {/* Port */}
               <EditableField
@@ -450,15 +448,9 @@ export function Config() {
       {activeTab === 'tool-rag' && config.toolRag && (
         <>
           <div className="card-header">
-            <div className="section-title">Tool RAG</div>
-          </div>
-          <InfoBanner>
-            Semantic tool selection — sends only the most relevant tools to the LLM per message.
-          </InfoBanner>
-          <div className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 500 }}>Enabled</span>
-              <label className="toggle">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div className="section-title" style={{ margin: 0 }}>Tool RAG</div>
+              <label className="toggle" style={{ margin: 0 }}>
                 <input
                   type="checkbox"
                   checked={config.toolRag.enabled}
@@ -468,6 +460,11 @@ export function Config() {
                 <span className="toggle-thumb" />
               </label>
             </div>
+          </div>
+          <InfoBanner>
+            Semantic tool selection — sends only the most relevant tools to the LLM per message.
+          </InfoBanner>
+          <div className="card">
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <label style={{ fontSize: '13px', color: 'var(--text-primary)' }}>

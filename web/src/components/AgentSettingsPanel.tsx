@@ -104,7 +104,7 @@ export function AgentSettingsPanel({
           <div style={{ display: 'grid', gap: '12px' }}>
             <EditableField
               label="Temperature"
-              description="Response creativity (0.0 = deterministic, 2.0 = max)"
+              description="Response creativity (0.0 = deterministic, 1.0 = max)"
               configKey="agent.temperature"
               type="number"
               value={getLocal('agent.temperature')}
@@ -113,7 +113,7 @@ export function AgentSettingsPanel({
               onSave={(v) => saveConfig('agent.temperature', v)}
               onCancel={() => cancelLocal('agent.temperature')}
               min={0}
-              max={2}
+              max={1}
               step={0.1}
               inline
             />

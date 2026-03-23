@@ -18,6 +18,30 @@ const STATE_CONFIG: Record<AgentState | 'error', { dot: string; label: string; p
   error:    { dot: 'var(--red)',           label: 'Error',        pulse: false },
 };
 
+export function AgentStatusBadge() {
+  const { state, error } = useAgentStatus();
+  const displayState = error && state === 'stopped' ? 'error' : state;
+  const config = STATE_CONFIG[displayState];
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '0 4px' }}>
+      <span
+        style={{
+          display: 'inline-block',
+          width: '8px',
+          height: '8px',
+          borderRadius: '50%',
+          backgroundColor: config.dot,
+          flexShrink: 0,
+        }}
+      />
+      <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-primary)', letterSpacing: '0.1px' }}>
+        {config.label}
+      </span>
+    </div>
+  );
+}
+
 export function AgentControl() {
   const { state, error } = useAgentStatus();
   const [inflight, setInflight] = useState(false);

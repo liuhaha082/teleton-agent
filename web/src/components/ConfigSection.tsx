@@ -42,7 +42,22 @@ export function ConfigSection({
           const checked = getLocal(item.key) === 'true';
           return (
             <div key={item.key} className="form-group">
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span>{item.label}</span>
+                  {item.description && <InfoTip text={item.description} />}
+                  {restartBadge && (
+                    <span style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
+                      (requires restart)
+                    </span>
+                  )}
+                </div>
                 <label className="toggle" style={{ margin: 0 }}>
                   <input
                     type="checkbox"
@@ -52,13 +67,6 @@ export function ConfigSection({
                   <span className="toggle-track" />
                   <span className="toggle-thumb" />
                 </label>
-                <span>{item.label}</span>
-                {item.description && <InfoTip text={item.description} />}
-                {restartBadge && (
-                  <span style={{ fontSize: 11, color: 'var(--text-secondary)' }}>
-                    (requires restart)
-                  </span>
-                )}
               </div>
             </div>
           );

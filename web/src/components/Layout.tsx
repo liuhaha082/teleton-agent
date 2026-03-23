@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Shell } from './Shell';
-import { AgentControl } from './AgentControl';
+import { AgentControl, AgentStatusBadge } from './AgentControl';
 import { ModeSwitch } from './ModeSwitch';
 import { logout } from '../lib/api';
 import { CSSProperties, ReactNode } from 'react';
@@ -213,6 +213,9 @@ function DashboardNav() {
       </nav>
 
       <div style={{ marginTop: 'auto' }}>
+        <div style={{ marginBottom: '8px' }}>
+          <AgentStatusBadge />
+        </div>
         <ModeSwitch />
         <div style={{ margin: '8px 0', padding: '0 4px' }}>
           <AgentControl />
