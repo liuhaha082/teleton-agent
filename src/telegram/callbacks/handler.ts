@@ -21,10 +21,10 @@ export class CallbackQueryHandler {
     this.handlers.set(actionPrefix, handler);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- peer type varies across GramJS update shapes
   async handle(event: {
     queryId: bigint;
     data?: Buffer;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- peer type varies across GramJS update shapes
     peer?: any;
     chatInstance?: string;
     msgId?: number;
