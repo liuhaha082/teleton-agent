@@ -4,7 +4,7 @@ interface InfoTipProps {
   text: string;
 }
 
-const TOOLTIP_BG = 'rgba(24, 24, 27, 0.95)';
+const TOOLTIP_BG = 'var(--bg-secondary)';
 const HIDE_GRACE_MS = 75;
 
 export function InfoTip({ text }: InfoTipProps) {

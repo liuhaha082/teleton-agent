@@ -271,7 +271,7 @@ describe("ToolRegistry", () => {
       expect(tools).toHaveLength(3);
       expect(tools).toEqual([
         { name: "telegram_kick", scope: "group-only" },
-        { name: "telegram_send", scope: "always" },
+        { name: "telegram_send", scope: "open" },
         { name: "telegram_wallet", scope: "dm-only" },
       ]);
     });

@@ -1081,7 +1081,7 @@ describe("Memory Schema", () => {
     });
 
     it("CURRENT_SCHEMA_VERSION is set to expected value", () => {
-      expect(CURRENT_SCHEMA_VERSION).toBe("1.16.0");
+      expect(CURRENT_SCHEMA_VERSION).toBe("1.18.0");
     });
   });
 
@@ -1323,7 +1323,15 @@ describe("Memory Schema", () => {
       ensureSchema(db);
       runMigrations(db);
 
-      const validScopes = ["always", "dm-only", "group-only", "admin-only"];
+      const validScopes = [
+        "always",
+        "dm-only",
+        "group-only",
+        "admin-only",
+        "open",
+        "allowlist",
+        "disabled",
+      ];
 
       for (const scope of validScopes) {
         db.prepare(`INSERT INTO tool_config (tool_name, scope) VALUES (?, ?)`).run(

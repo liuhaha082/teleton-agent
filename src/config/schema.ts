@@ -257,7 +257,7 @@ const McpServerSchema = z
       .describe("Environment variables for stdio server"),
     url: z.string().url().optional().describe("SSE/HTTP endpoint URL (alternative to command)"),
     scope: z
-      .enum(["always", "dm-only", "group-only", "admin-only"])
+      .enum(["always", "dm-only", "group-only", "admin-only", "open", "allowlist", "disabled"])
       .default("always")
       .describe("Tool scope"),
     enabled: z.boolean().default(true).describe("Enable/disable this server"),

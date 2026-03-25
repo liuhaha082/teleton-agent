@@ -314,7 +314,7 @@ export function Plugins() {
       )}
 
       {priorityChanged && (
-        <div className="alert" style={{ marginBottom: '14px', fontSize: '13px', color: 'var(--text-secondary)', background: 'rgba(110,168,254,0.08)', border: '1px solid rgba(110,168,254,0.2)' }}>
+        <div className="alert" style={{ marginBottom: '14px', fontSize: '13px', color: 'var(--text-secondary)', background: 'var(--accent-dim)', border: '1px solid var(--accent-subtle)' }}>
           Priority updated - changes take effect on next agent restart
         </div>
       )}
@@ -490,7 +490,7 @@ export function Plugins() {
                         style={{
                           cursor: 'pointer',
                           borderBottom: isExpanded ? 'none' : '1px solid var(--border)',
-                          backgroundColor: isExpanded ? 'rgba(255,255,255,0.03)' : undefined,
+                          backgroundColor: isExpanded ? 'var(--glass-micro)' : undefined,
                         }}
                         className="file-row"
                       >
@@ -572,8 +572,8 @@ export function Plugins() {
                               <>
                                 <Select
                                   value={commonScope}
-                                  options={['', 'always', 'dm-only', 'group-only', 'admin-only']}
-                                  labels={[mixedScope ? 'Mixed' : 'Scope', 'All', 'DM only', 'Group only', 'Admin only']}
+                                  options={['', 'open', 'dm-only', 'group-only', 'admin-only', 'allowlist', 'disabled']}
+                                  labels={[mixedScope ? 'Mixed' : 'Scope', 'All', 'DM only', 'Group only', 'Admin only', 'Allowlist', 'Disabled']}
                                   onChange={(v) => v && bulkScope(module, v as ToolInfo['scope'])}
                                   style={{ minWidth: '100px' }}
                                 />
@@ -608,7 +608,7 @@ export function Plugins() {
                         </td>
                       </tr>
                       {isExpanded && (
-                        <tr style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderBottom: '1px solid var(--border)' }}>
+                        <tr style={{ backgroundColor: 'var(--glass-micro)', borderBottom: '1px solid var(--border)' }}>
                           <td colSpan={5} style={{ padding: '0 14px 14px 14px' }}>
                             {/* Tool rows */}
                             {module && module.tools.length > 0 && (
@@ -802,7 +802,7 @@ export function Plugins() {
                           style={{
                             cursor: 'pointer',
                             borderBottom: isExpanded ? 'none' : '1px solid var(--border)',
-                            backgroundColor: isExpanded ? 'rgba(255,255,255,0.03)' : undefined,
+                            backgroundColor: isExpanded ? 'var(--glass-micro)' : undefined,
                           }}
                           className="file-row"
                         >
@@ -847,7 +847,7 @@ export function Plugins() {
                           </td>
                         </tr>
                         {isExpanded && (
-                          <tr style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderBottom: '1px solid var(--border)' }}>
+                          <tr style={{ backgroundColor: 'var(--glass-micro)', borderBottom: '1px solid var(--border)' }}>
                             <td colSpan={5} style={{ padding: '0 14px 14px 14px' }}>
                               <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '4px 12px', fontSize: '12px', padding: '8px 0' }}>
                                 <span style={{ color: 'var(--text-secondary)' }}>Author</span>

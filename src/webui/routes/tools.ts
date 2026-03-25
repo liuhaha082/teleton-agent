@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import type { WebUIServerDeps, ToolInfo, ModuleInfo, APIResponse } from "../types.js";
+import type { ToolScope } from "../../agent/tools/types.js";
 import { getErrorMessage } from "../../utils/errors.js";
 import { readRawConfig, setNestedValue, writeRawConfig } from "../../config/configurable-keys.js";
 
@@ -168,7 +169,15 @@ export function createToolsRoutes(deps: WebUIServerDeps) {
       const { enabled, scope } = body as { enabled?: boolean; scope?: string };
 
       // Validate scope against whitelist
-      const VALID_SCOPES = ["always", "dm-only", "group-only", "admin-only"] as const;
+      const VALID_SCOPES = [
+        "always",
+        "dm-only",
+        "group-only",
+        "admin-only",
+        "open",
+        "allowlist",
+        "disabled",
+      ] as const;
       if (scope !== undefined && !(VALID_SCOPES as readonly string[]).includes(scope)) {
         const response: APIResponse = {
           success: false,
@@ -191,10 +200,7 @@ export function createToolsRoutes(deps: WebUIServerDeps) {
 
       // Update scope if provided
       if (scope !== undefined) {
-        const success = deps.toolRegistry.updateToolScope(
-          toolName,
-          scope as "always" | "dm-only" | "group-only" | "admin-only"
-        );
+        const success = deps.toolRegistry.updateToolScope(toolName, scope as ToolScope);
         if (!success) {
           const response: APIResponse = {
             success: false,

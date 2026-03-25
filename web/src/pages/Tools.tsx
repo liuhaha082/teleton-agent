@@ -215,7 +215,7 @@ export function Tools() {
                       style={{
                         cursor: 'pointer',
                         borderBottom: isExpanded ? 'none' : '1px solid var(--border)',
-                        backgroundColor: isExpanded ? 'rgba(255,255,255,0.03)' : undefined,
+                        backgroundColor: isExpanded ? 'var(--glass-micro)' : undefined,
                       }}
                       className="file-row"
                     >
@@ -242,8 +242,8 @@ export function Tools() {
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '8px' }}>
                           <Select
                             value={commonScope}
-                            options={['', 'always', 'dm-only', 'group-only', 'admin-only']}
-                            labels={[mixedScope ? 'Mixed' : 'Scope', 'All', 'DM only', 'Group only', 'Admin only']}
+                            options={['', 'open', 'dm-only', 'group-only', 'admin-only', 'allowlist', 'disabled']}
+                            labels={[mixedScope ? 'Mixed' : 'Scope', 'All', 'DM only', 'Group only', 'Admin only', 'Allowlist', 'Disabled']}
                             onChange={(v) => v && bulkScope(module, v as ToolInfo['scope'])}
                             style={{ minWidth: '100px' }}
                           />
@@ -261,7 +261,7 @@ export function Tools() {
                       </td>
                     </tr>
                     {isExpanded && (
-                      <tr key={`${module.name}-detail`} style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderBottom: '1px solid var(--border)' }}>
+                      <tr key={`${module.name}-detail`} style={{ backgroundColor: 'var(--glass-micro)', borderBottom: '1px solid var(--border)' }}>
                         <td colSpan={4} style={{ padding: '0 14px 14px 14px' }}>
                           <div style={{ display: 'grid', gap: '6px', paddingTop: '6px' }}>
                             {module.tools.map((tool) => (

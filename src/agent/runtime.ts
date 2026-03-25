@@ -143,6 +143,10 @@ export class AgentRuntime {
     this.soul = soul ?? "";
     this.toolRegistry = toolRegistry ?? null;
 
+    if (this.toolRegistry && config.telegram?.allow_from?.length) {
+      this.toolRegistry.setAllowFrom(config.telegram.allow_from);
+    }
+
     const provider = (config.agent.provider || "anthropic") as SupportedProvider;
     try {
       const model = getProviderModel(provider, config.agent.model);
@@ -535,7 +539,8 @@ export class AgentRuntime {
             effectiveIsGroup,
             providerMeta.toolLimit,
             chatId,
-            isAdmin
+            isAdmin,
+            toolContext?.senderId
           );
           log.info(`Tool RAG: ${tools.length}/${this.toolRegistry.count} tools selected`);
         } else {
@@ -543,7 +548,8 @@ export class AgentRuntime {
             effectiveIsGroup,
             providerMeta.toolLimit,
             chatId,
-            isAdmin
+            isAdmin,
+            toolContext?.senderId
           );
         }
       }

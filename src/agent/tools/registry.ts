@@ -38,6 +38,7 @@ export class ToolRegistry {
   private requiredModes: Map<string, "user" | "bot"> = new Map();
   private toolTags: Map<string, string[]> = new Map();
   private activeToolset: string | null = null; // null = "full" (no filtering)
+  private allowFrom: Set<number> = new Set();
 
   private static readonly TOOLSET_PROFILES: Record<string, string[]> = {
     minimal: ["core"],
@@ -61,7 +62,7 @@ export class ToolRegistry {
       throw new Error(`Tool "${tool.name}" is already registered`);
     }
     this.tools.set(tool.name, { tool, executor: executor as ToolExecutor });
-    if (scope && scope !== "always") {
+    if (scope && scope !== "always" && scope !== "open") {
       this.scopes.set(tool.name, scope);
     }
     if (requiredMode) {
@@ -99,6 +100,10 @@ export class ToolRegistry {
     log.info(`Active toolset: ${this.activeToolset ?? "full"}`);
   }
 
+  setAllowFrom(ids: number[]): void {
+    this.allowFrom = new Set(ids);
+  }
+
   getActiveToolset(): string | null {
     return this.activeToolset;
   }
@@ -120,11 +125,11 @@ export class ToolRegistry {
     return count;
   }
 
-  getModuleTools(module: string): Array<{ name: string; scope: ToolScope | "always" }> {
-    const result: Array<{ name: string; scope: ToolScope | "always" }> = [];
+  getModuleTools(module: string): Array<{ name: string; scope: ToolScope }> {
+    const result: Array<{ name: string; scope: ToolScope }> = [];
     for (const [name, mod] of this.toolModules) {
       if (mod === module) {
-        result.push({ name, scope: this.scopes.get(name) ?? "always" });
+        result.push({ name, scope: this.getEffectiveScope(name) });
       }
     }
     return result.sort((a, b) => a.name.localeCompare(b.name));
@@ -165,6 +170,12 @@ export class ToolRegistry {
     }
 
     const scope = this.getEffectiveScope(toolCall.name);
+    if (scope === "disabled") {
+      return {
+        success: false,
+        error: `Tool "${toolCall.name}" is currently disabled`,
+      };
+    }
     if (scope === "dm-only" && context.isGroup) {
       return {
         success: false,
@@ -184,6 +195,17 @@ export class ToolRegistry {
           success: false,
           error: `Tool "${toolCall.name}" is restricted to admin users`,
         };
+      }
+    }
+    if (scope === "allowlist") {
+      const isAdmin = context.config?.telegram.admin_ids.includes(context.senderId) ?? false;
+      if (!isAdmin) {
+        if (!this.allowFrom.has(context.senderId)) {
+          return {
+            success: false,
+            error: `Tool "${toolCall.name}" is restricted to allowed users`,
+          };
+        }
       }
     }
 
@@ -253,7 +275,8 @@ export class ToolRegistry {
     isGroup: boolean,
     toolLimit: number | null,
     chatId?: string,
-    isAdmin?: boolean
+    isAdmin?: boolean,
+    senderId?: number
   ): PiAiTool[] {
     const excluded = isGroup ? "dm-only" : "group-only";
     const filtered = Array.from(this.tools.values())
@@ -280,8 +303,22 @@ export class ToolRegistry {
 
         // Use effective scope (with config override)
         const effectiveScope = this.getEffectiveScope(rt.tool.name);
+
+        // "disabled" = completely hidden
+        if (effectiveScope === "disabled") return false;
+
+        // "dm-only" excluded from groups, "group-only" excluded from DMs
         if (effectiveScope === excluded) return false;
+
+        // "admin-only" requires admin
         if (effectiveScope === "admin-only" && !isAdmin) return false;
+
+        // "allowlist" requires senderId in allowFrom OR isAdmin (admins bypass)
+        if (effectiveScope === "allowlist" && !isAdmin) {
+          if (!senderId || !this.allowFrom.has(senderId)) return false;
+        }
+
+        // "open" and "always" = always available (no filter)
 
         if (isGroup && chatId && this.permissions) {
           const module = this.toolModules.get(rt.tool.name);
@@ -353,9 +390,10 @@ export class ToolRegistry {
   private getEffectiveScope(toolName: string): ToolScope {
     const config = this.toolConfigs.get(toolName);
     if (config?.scope !== null && config?.scope !== undefined) {
-      return config.scope;
+      return config.scope === "always" ? "open" : config.scope;
     }
-    return this.scopes.get(toolName) ?? "always";
+    const codeScope = this.scopes.get(toolName) ?? "open";
+    return codeScope === "always" ? "open" : codeScope;
   }
 
   /**
@@ -426,7 +464,7 @@ export class ToolRegistry {
     for (const { tool, executor, scope } of tools) {
       if (this.tools.has(tool.name)) continue;
       this.tools.set(tool.name, { tool, executor });
-      if (scope && scope !== "always") {
+      if (scope && scope !== "always" && scope !== "open") {
         this.scopes.set(tool.name, scope);
       }
       this.toolModules.set(tool.name, pluginName);
@@ -481,7 +519,7 @@ export class ToolRegistry {
         continue;
       }
       this.tools.set(tool.name, { tool, executor });
-      if (scope && scope !== "always") {
+      if (scope && scope !== "always" && scope !== "open") {
         this.scopes.set(tool.name, scope);
       }
       this.toolModules.set(tool.name, pluginName);
@@ -564,10 +602,11 @@ export class ToolRegistry {
     isGroup: boolean,
     toolLimit: number | null,
     chatId?: string,
-    isAdmin?: boolean
+    isAdmin?: boolean,
+    senderId?: number
   ): Promise<PiAiTool[]> {
     // Get scope-filtered tools (no limit applied yet)
-    const scopeFiltered = this.getForContext(isGroup, null, chatId, isAdmin);
+    const scopeFiltered = this.getForContext(isGroup, null, chatId, isAdmin, senderId);
     const scopeSet = new Set(scopeFiltered.map((t) => t.name));
 
     if (!this.toolIndex) {

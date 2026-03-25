@@ -4,7 +4,7 @@ import type { MemorySystem } from "../memory/index.js";
 import type { ToolRegistry } from "../agent/tools/registry.js";
 import type { WebUIConfig, Config } from "../config/schema.js";
 import type { Database } from "better-sqlite3";
-import type { PluginModule, PluginContext } from "../agent/tools/types.js";
+import type { PluginModule, PluginContext, ToolScope } from "../agent/tools/types.js";
 import type { SDKDependencies } from "../sdk/index.js";
 import type { AgentLifecycle } from "../agent/lifecycle.js";
 import type { UserHookEvaluator } from "../agent/hooks/user-hook-evaluator.js";
@@ -104,7 +104,7 @@ export interface ToolInfo {
   name: string;
   description: string;
   module: string;
-  scope: "always" | "dm-only" | "group-only" | "admin-only";
+  scope: ToolScope;
   category?: string;
   enabled: boolean;
 }

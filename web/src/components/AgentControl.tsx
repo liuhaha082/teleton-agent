@@ -162,7 +162,7 @@ export function AgentControl() {
             width: '100%',
             background: 'var(--green-dim)',
             color: 'var(--green)',
-            border: '1px solid rgba(48, 209, 88, 0.2)',
+            border: '1px solid var(--green-dim)',
             fontSize: '12px',
             padding: '6px 12px',
           }}

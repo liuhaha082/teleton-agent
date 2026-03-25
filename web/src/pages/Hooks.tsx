@@ -385,7 +385,7 @@ export function Hooks() {
           padding: '12px',
           border: '1px solid var(--border)',
           borderRadius: '8px',
-          background: 'rgba(255,255,255,0.02)',
+          background: 'var(--glass-ultrathin)',
         }}>
           <div style={{ fontSize: '13px', fontWeight: 600, marginBottom: '8px', color: 'var(--text-secondary)' }}>
             New Trigger

@@ -175,13 +175,13 @@ export function Wallet() {
                       style={{
                         cursor: 'pointer',
                         borderBottom: isExpanded ? 'none' : '1px solid var(--border)',
-                        backgroundColor: isExpanded ? 'rgba(255,255,255,0.03)' : undefined,
+                        backgroundColor: isExpanded ? 'var(--glass-micro)' : undefined,
                       }}
                       className="file-row"
                     >
                       <td style={{ padding: '6px 14px', fontSize: '16px' }}>
                         <span style={{
-                          color: dir === 'in' ? 'rgb(74,222,128)' : dir === 'out' ? 'rgb(248,113,113)' : 'var(--text-secondary)',
+                          color: dir === 'in' ? 'var(--green)' : dir === 'out' ? 'var(--red)' : 'var(--text-secondary)',
                         }}>
                           {dir === 'in' ? '\u2193' : dir === 'out' ? '\u2191' : '\u2022'}
                         </span>
@@ -192,8 +192,8 @@ export function Wallet() {
                           padding: '1px 6px',
                           fontSize: '11px',
                           borderRadius: '3px',
-                          backgroundColor: dir === 'in' ? 'rgba(34,197,94,0.15)' : dir === 'out' ? 'rgba(239,68,68,0.15)' : 'rgba(156,163,175,0.15)',
-                          color: dir === 'in' ? 'rgb(74,222,128)' : dir === 'out' ? 'rgb(248,113,113)' : 'var(--text-secondary)',
+                          backgroundColor: dir === 'in' ? 'var(--green-dim)' : dir === 'out' ? 'var(--red-dim)' : 'var(--bg-muted)',
+                          color: dir === 'in' ? 'var(--green)' : dir === 'out' ? 'var(--red)' : 'var(--text-secondary)',
                         }}>
                           {tx.type.replace(/_/g, ' ')}
                         </span>
@@ -202,7 +202,7 @@ export function Wallet() {
                         textAlign: 'right',
                         padding: '6px 14px',
                         fontWeight: 500,
-                        color: dir === 'in' ? 'rgb(74,222,128)' : 'var(--text-primary)',
+                        color: dir === 'in' ? 'var(--green)' : 'var(--text-primary)',
                       }}>
                         {tx.amount ? `${dir === 'in' ? '+' : dir === 'out' ? '-' : ''}${tx.amount}` : '\u2014'}
                       </td>
@@ -214,7 +214,7 @@ export function Wallet() {
                       </td>
                     </tr>
                     {isExpanded && (
-                      <tr style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderBottom: '1px solid var(--border)' }}>
+                      <tr style={{ backgroundColor: 'var(--glass-micro)', borderBottom: '1px solid var(--border)' }}>
                         <td colSpan={5} style={{ padding: '0 14px 14px 14px' }}>
                           <div style={{
                             padding: '10px 12px',

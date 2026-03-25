@@ -136,7 +136,7 @@ const navLinkBase: CSSProperties = {
 const navLinkActive: CSSProperties = {
   ...navLinkBase,
   color: 'var(--text-primary)',
-  background: 'rgba(255, 255, 255, 0.08)',
+  background: 'var(--border-glass)',
 };
 
 const navLinkHoverClass = 'nav-link-hover';

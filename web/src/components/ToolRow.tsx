@@ -25,14 +25,14 @@ export function ToolRow({ tool, updating, onToggle, onScope }: ToolRowProps) {
       </div>
 
       <div className={`scope-seg${!tool.enabled || updating === tool.name ? ' disabled' : ''}`}>
-        {(['always', 'dm-only', 'group-only', 'admin-only'] as const).map((s) => (
+        {(['open', 'dm-only', 'group-only', 'admin-only', 'allowlist', 'disabled'] as const).map((s) => (
           <button
             key={s}
-            className={tool.scope === s ? 'active' : ''}
+            className={tool.scope === s || (s === 'open' && tool.scope === 'always') ? 'active' : ''}
             disabled={!tool.enabled || updating === tool.name}
             onClick={() => onScope(tool.name, s)}
           >
-            {s === 'always' ? 'All' : s === 'dm-only' ? 'DM' : s === 'group-only' ? 'Group' : 'Admin'}
+            {s === 'open' ? 'All' : s === 'dm-only' ? 'DM' : s === 'group-only' ? 'Group' : s === 'admin-only' ? 'Admin' : s === 'allowlist' ? 'List' : 'Off'}
           </button>
         ))}
       </div>

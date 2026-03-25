@@ -342,7 +342,7 @@ export function Workspace() {
                       style={{
                         cursor: 'pointer',
                         borderBottom: isExpanded ? 'none' : '1px solid var(--border)',
-                        backgroundColor: isExpanded ? 'rgba(255,255,255,0.03)' : undefined,
+                        backgroundColor: isExpanded ? 'var(--glass-micro)' : undefined,
                       }}
                       className="file-row"
                     >
@@ -380,7 +380,7 @@ export function Workspace() {
                       </td>
                     </tr>
                     {isExpanded && (
-                      <tr style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderBottom: '1px solid var(--border)' }}>
+                      <tr style={{ backgroundColor: 'var(--glass-micro)', borderBottom: '1px solid var(--border)' }}>
                         <td colSpan={4} style={{ padding: '0 14px 14px 14px' }}>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0' }}>
                             <span style={{ fontSize: '13px', fontWeight: 600 }}>

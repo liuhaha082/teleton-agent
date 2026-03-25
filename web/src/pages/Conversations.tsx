@@ -130,7 +130,7 @@ export function Conversations() {
                       style={{
                         cursor: 'pointer',
                         borderBottom: isExpanded ? 'none' : '1px solid var(--border)',
-                        backgroundColor: isExpanded ? 'rgba(255,255,255,0.03)' : undefined,
+                        backgroundColor: isExpanded ? 'var(--glass-micro)' : undefined,
                       }}
                       className="file-row"
                     >
@@ -146,8 +146,8 @@ export function Conversations() {
                           padding: '1px 6px',
                           fontSize: '11px',
                           borderRadius: '3px',
-                          backgroundColor: chat.type === 'dm' ? 'rgba(59,130,246,0.15)' : 'rgba(168,85,247,0.15)',
-                          color: chat.type === 'dm' ? 'rgb(96,165,250)' : 'rgb(192,132,252)',
+                          backgroundColor: chat.type === 'dm' ? 'var(--accent-dim)' : 'var(--purple-dim)',
+                          color: chat.type === 'dm' ? 'var(--accent-soft)' : 'var(--purple)',
                         }}>
                           {chat.type}
                         </span>
@@ -160,7 +160,7 @@ export function Conversations() {
                       </td>
                     </tr>
                     {isExpanded && (
-                      <tr style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderBottom: '1px solid var(--border)' }}>
+                      <tr style={{ backgroundColor: 'var(--glass-micro)', borderBottom: '1px solid var(--border)' }}>
                         <td colSpan={4} style={{ padding: '0 14px 14px 14px' }}>
                           {messagesLoading ? (
                             <div style={{ padding: '12px 0', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '12px' }}>Loading messages...</div>
@@ -186,8 +186,8 @@ export function Conversations() {
                                         padding: '0px 5px',
                                         fontSize: '10px',
                                         borderRadius: '3px',
-                                        backgroundColor: 'rgba(34,197,94,0.15)',
-                                        color: 'rgb(74,222,128)',
+                                        backgroundColor: 'var(--green-dim)',
+                                        color: 'var(--green)',
                                       }}>
                                         Agent
                                       </span>

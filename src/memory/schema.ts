@@ -356,7 +356,7 @@ export function setSchemaVersion(db: Database.Database, version: string): void {
   ).run(version);
 }
 
-export const CURRENT_SCHEMA_VERSION = "1.17.0";
+export const CURRENT_SCHEMA_VERSION = "1.18.0";
 
 export function runMigrations(db: Database.Database): void {
   const currentVersion = getSchemaVersion(db);
@@ -706,6 +706,48 @@ export function runMigrations(db: Database.Database): void {
       log.info("Migration 1.17.0 complete: importance/access/lifecycle columns added to knowledge");
     } catch (error) {
       log.error({ err: error }, "Migration 1.17.0 failed");
+      throw error;
+    }
+  }
+
+  if (!currentVersion || versionLessThan(currentVersion, "1.18.0")) {
+    log.info(
+      "Running migration 1.18.0: Extend tool_config scope CHECK constraint for new scope values"
+    );
+    try {
+      const tableExists = db
+        .prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='tool_config'")
+        .get();
+
+      if (tableExists) {
+        db.transaction(() => {
+          db.exec(`
+            CREATE TABLE IF NOT EXISTS tool_config_new (
+              tool_name TEXT PRIMARY KEY,
+              enabled INTEGER NOT NULL DEFAULT 1 CHECK(enabled IN (0, 1)),
+              scope TEXT CHECK(scope IN ('always', 'open', 'dm-only', 'group-only', 'admin-only', 'allowlist', 'disabled')),
+              updated_at INTEGER NOT NULL DEFAULT (unixepoch()),
+              updated_by INTEGER
+            );
+            INSERT OR IGNORE INTO tool_config_new SELECT * FROM tool_config;
+            DROP TABLE tool_config;
+            ALTER TABLE tool_config_new RENAME TO tool_config;
+          `);
+        })();
+      } else {
+        db.exec(`
+          CREATE TABLE IF NOT EXISTS tool_config (
+            tool_name TEXT PRIMARY KEY,
+            enabled INTEGER NOT NULL DEFAULT 1 CHECK(enabled IN (0, 1)),
+            scope TEXT CHECK(scope IN ('always', 'open', 'dm-only', 'group-only', 'admin-only', 'allowlist', 'disabled')),
+            updated_at INTEGER NOT NULL DEFAULT (unixepoch()),
+            updated_by INTEGER
+          );
+        `);
+      }
+      log.info("Migration 1.18.0 complete: tool_config scope CHECK constraint extended");
+    } catch (error) {
+      log.error({ err: error }, "Migration 1.18.0 failed");
       throw error;
     }
   }

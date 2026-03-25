@@ -73,8 +73,8 @@ export function TelegramStep({ data, onChange }: StepProps) {
               padding: '8px 16px',
               border: 'none',
               cursor: 'pointer',
-              background: data.authMode === 'qr' ? 'var(--accent, #6c5ce7)' : 'transparent',
-              color: data.authMode === 'qr' ? '#fff' : 'var(--text-muted, #999)',
+              background: data.authMode === 'qr' ? 'var(--accent)' : 'transparent',
+              color: data.authMode === 'qr' ? 'var(--text-on-accent)' : 'var(--text-secondary)',
               fontWeight: data.authMode === 'qr' ? 600 : 400,
               transition: 'all 0.2s',
             }}
@@ -89,8 +89,8 @@ export function TelegramStep({ data, onChange }: StepProps) {
               padding: '8px 16px',
               border: 'none',
               cursor: 'pointer',
-              background: data.authMode === 'phone' ? 'var(--accent, #6c5ce7)' : 'transparent',
-              color: data.authMode === 'phone' ? '#fff' : 'var(--text-muted, #999)',
+              background: data.authMode === 'phone' ? 'var(--accent)' : 'transparent',
+              color: data.authMode === 'phone' ? 'var(--text-on-accent)' : 'var(--text-secondary)',
               fontWeight: data.authMode === 'phone' ? 600 : 400,
               transition: 'all 0.2s',
             }}

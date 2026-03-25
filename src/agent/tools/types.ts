@@ -40,12 +40,22 @@ export type ToolCategory = "data-bearing" | "action";
 
 /**
  * Tool scope for context-based filtering.
- * - "always": included in both DMs and groups (default)
+ * - "open": included in both DMs and groups (default, canonical form)
+ * - "always": legacy alias for "open" (backward compat)
  * - "dm-only": excluded from group chats (financial, private tools)
  * - "group-only": excluded from DMs (moderation tools)
  * - "admin-only": restricted to admin users only
+ * - "allowlist": restricted to allow_from user IDs (admins bypass)
+ * - "disabled": tool completely hidden from all contexts
  */
-export type ToolScope = "always" | "dm-only" | "group-only" | "admin-only";
+export type ToolScope =
+  | "open"
+  | "always"
+  | "dm-only"
+  | "group-only"
+  | "admin-only"
+  | "allowlist"
+  | "disabled";
 
 /**
  * Tool definition compatible with pi-ai

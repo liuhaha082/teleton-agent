@@ -124,7 +124,7 @@ export function Memory() {
                       style={{
                         cursor: 'pointer',
                         borderBottom: isExpanded ? 'none' : '1px solid var(--border)',
-                        backgroundColor: isExpanded ? 'rgba(255,255,255,0.03)' : undefined,
+                        backgroundColor: isExpanded ? 'var(--glass-micro)' : undefined,
                       }}
                       className="file-row"
                     >
@@ -142,7 +142,7 @@ export function Memory() {
                       </td>
                     </tr>
                     {isExpanded && (
-                      <tr style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderBottom: '1px solid var(--border)' }}>
+                      <tr style={{ backgroundColor: 'var(--glass-micro)', borderBottom: '1px solid var(--border)' }}>
                         <td colSpan={3} style={{ padding: '0 14px 14px 14px' }}>
                           {chunksLoading ? (
                             <div style={{ padding: '12px 0', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '12px' }}>Loading chunks...</div>

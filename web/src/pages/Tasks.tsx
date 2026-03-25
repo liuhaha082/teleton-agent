@@ -373,7 +373,7 @@ export function Tasks() {
                       style={{
                         cursor: 'pointer',
                         borderBottom: isExpanded ? 'none' : '1px solid var(--border)',
-                        backgroundColor: isExpanded ? 'rgba(255,255,255,0.03)' : undefined,
+                        backgroundColor: isExpanded ? 'var(--glass-micro)' : undefined,
                       }}
                       className="file-row"
                     >
@@ -417,7 +417,7 @@ export function Tasks() {
                       </td>
                     </tr>
                     {isExpanded && selected && (
-                      <tr style={{ backgroundColor: 'rgba(255,255,255,0.03)', borderBottom: '1px solid var(--border)' }}>
+                      <tr style={{ backgroundColor: 'var(--glass-micro)', borderBottom: '1px solid var(--border)' }}>
                         <td colSpan={6} style={{ padding: '0 14px 14px 14px', overflow: 'hidden' }}>
                           <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '6px 12px', fontSize: '13px', padding: '10px 0' }}>
                             <span style={{ color: 'var(--text-secondary)' }}>ID</span>

@@ -184,7 +184,7 @@ export interface ToolInfo {
   name: string;
   description: string;
   module: string;
-  scope: 'always' | 'dm-only' | 'group-only' | 'admin-only';
+  scope: 'open' | 'always' | 'dm-only' | 'group-only' | 'admin-only' | 'allowlist' | 'disabled';
   category?: string;
   enabled: boolean;
 }
@@ -497,7 +497,7 @@ export const api = {
 
   async updateToolConfig(
     toolName: string,
-    config: { enabled?: boolean; scope?: 'always' | 'dm-only' | 'group-only' | 'admin-only' }
+    config: { enabled?: boolean; scope?: ToolInfo['scope'] }
   ) {
     return fetchAPI<APIResponse<ToolConfigData>>(`/tools/${toolName}`, {
       method: 'PUT',

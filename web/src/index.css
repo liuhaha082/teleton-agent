@@ -20,6 +20,7 @@
 
   /* ── Glass system (5 levels) ── */
   --glass-ultrathin: rgba(255, 255, 255, 0.02);
+  --glass-micro: rgba(255,255,255,0.03);
   --glass-thin: rgba(255, 255, 255, 0.04);
   --glass-regular: rgba(255, 255, 255, 0.06);
   --glass-thick: rgba(255, 255, 255, 0.10);
