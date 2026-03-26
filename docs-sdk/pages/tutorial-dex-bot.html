@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,11 +29,10 @@
         <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
             <div class="nav-section"><div class="nav-section-title">Start Here</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="/index.html" class="nav-link">Introduction</a></li><li><a href="installation.html" class="nav-link">Installation</a></li><li><a href="quickstart.html" class="nav-link">Quick Start</a></li><li><a href="configuration.html" class="nav-link">Configuration</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">Understand</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="architecture.html" class="nav-link">Architecture</a></li><li><a href="agentic-loop.html" class="nav-link">Agentic Loop</a></li><li><a href="memory-system.html" class="nav-link">Memory System</a></li><li><a href="security.html" class="nav-link">Security</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (66)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (7)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Configure</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="multi-llm.html" class="nav-link">Multi-LLM Providers</a></li><li><a href="scheduled-tasks.html" class="nav-link">Scheduled Tasks</a></li><li><a href="webui.html" class="nav-link">WebUI Dashboard</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li><li><a href="create-plugin.html" class="nav-link">Create a Plugin</a></li><li><a href="api-events.html" class="nav-link">Plugin Lifecycle</a></li><li><a href="mcp-servers.html" class="nav-link">MCP Servers</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (76)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (8)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">SDK Reference</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="sdk-overview.html" class="nav-link">Overview</a></li><li><a href="sdk-ton.html" class="nav-link">TON Blockchain</a></li><li><a href="sdk-dex.html" class="nav-link">DEX Trading</a></li><li><a href="sdk-dns.html" class="nav-link">DNS &amp; Domains</a></li><li><a href="sdk-telegram.html" class="nav-link">Telegram</a></li><li><a href="sdk-bot.html" class="nav-link">Bot SDK</a></li><li><a href="sdk-utilities.html" class="nav-link">Utilities</a></li><li><a href="sdk-errors.html" class="nav-link">Error Handling</a></li><li><a href="tutorial-payment-bot.html" class="nav-link">Tutorial: Payment Bot</a></li><li><a href="tutorial-dex-bot.html" class="nav-link active">Tutorial: DEX Bot</a></li><li><a href="tutorial-inline-bot.html" class="nav-link">Tutorial: Inline Bot</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="api-commands.html" class="nav-link">Admin Commands</a></li><li><a href="api-config.html" class="nav-link">Config Schema</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
         </nav></aside>
         <main class="main"><article class="content">
 
@@ -63,17 +62,17 @@
             <section class="section" id="step-1">
                 <h2>Step 1: Manifest</h2>
                 <p>Define the plugin manifest. No secrets are needed since the SDK's DEX methods use the agent's configured TON wallet and TonAPI key internally.</p>
-                <div class="code-block"><div class="code-header"><span>dex-trader/index.ts &mdash; Manifest</span></div><pre><code class="language-typescript">import type { PluginSDK, SimpleToolDef, PluginManifest } from "@teleton-agent/sdk";
+                <div class="code-block"><div class="code-header"><span>dex-trader/index.ts: Manifest</span></div><pre><code class="language-typescript">import type { PluginSDK, SimpleToolDef, PluginManifest } from "@teleton-agent/sdk";
 
 export const manifest: PluginManifest = {
   name: "dex-trader",
   version: "1.0.0",
-  description: "DEX trading bot — compare quotes and swap tokens on STON.fi and DeDust",
+  description: "DEX trading bot, compare quotes and swap tokens on STON.fi and DeDust",
 };</code></pre></div>
             </section>
 
             <section class="section" id="step-2">
-                <h2>Step 2: Tool &mdash; dex_quote</h2>
+                <h2>Step 2: Tool: dex_quote</h2>
                 <p>This tool fetches quotes from both STON.fi and DeDust, compares them, and recommends the best one. The <code>sdk.ton.dex.quote()</code> method handles all the comparison logic.</p>
                 <div class="code-block"><div class="code-header"><span>dex_quote tool</span></div><pre><code class="language-typescript">{
   name: "dex_quote",
@@ -144,7 +143,7 @@ export const manifest: PluginManifest = {
             </section>
 
             <section class="section" id="step-3">
-                <h2>Step 3: Tool &mdash; dex_swap</h2>
+                <h2>Step 3: Tool: dex_swap</h2>
                 <p>This tool executes the actual swap. It can auto-select the best DEX or be forced to use a specific one. The swap is an irreversible blockchain transaction.</p>
                 <div class="code-block"><div class="code-header"><span>dex_swap tool</span></div><pre><code class="language-typescript">{
   name: "dex_swap",
@@ -220,7 +219,7 @@ export const manifest: PluginManifest = {
             </section>
 
             <section class="section" id="step-4">
-                <h2>Step 4: Tool &mdash; dex_portfolio</h2>
+                <h2>Step 4: Tool: dex_portfolio</h2>
                 <p>A portfolio overview tool that lists all jetton holdings with current prices in USD.</p>
                 <div class="code-block"><div class="code-header"><span>dex_portfolio tool</span></div><pre><code class="language-typescript">{
   name: "dex_portfolio",
@@ -284,12 +283,12 @@ export const manifest: PluginManifest = {
             <section class="section" id="step-5">
                 <h2>Step 5: Complete Plugin Code</h2>
                 <p>Here is the entire plugin file, ready to copy into your plugins directory:</p>
-                <div class="code-block"><div class="code-header"><span>dex-trader/index.ts &mdash; Complete Plugin</span></div><pre><code class="language-typescript">import type { PluginSDK, SimpleToolDef, PluginManifest } from "@teleton-agent/sdk";
+                <div class="code-block"><div class="code-header"><span>dex-trader/index.ts: Complete Plugin</span></div><pre><code class="language-typescript">import type { PluginSDK, SimpleToolDef, PluginManifest } from "@teleton-agent/sdk";
 
 export const manifest: PluginManifest = {
   name: "dex-trader",
   version: "1.0.0",
-  description: "DEX trading bot — compare quotes and swap tokens on STON.fi and DeDust",
+  description: "DEX trading bot, compare quotes and swap tokens on STON.fi and DeDust",
 };
 
 // Well-known jetton addresses for convenience

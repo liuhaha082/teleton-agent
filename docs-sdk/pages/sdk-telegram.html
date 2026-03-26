@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sdk.telegram — Telegram - Teleton Agent Documentation</title>
+    <title>sdk.telegram, Telegram - Teleton Agent Documentation</title>
     <meta name="description" content="Complete reference for the 52 Telegram methods in the Teleton Plugin SDK: messaging, media, moderation, stars, gifts, collectibles, and more.">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -29,15 +29,14 @@
         <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
             <div class="nav-section"><div class="nav-section-title">Start Here</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="/index.html" class="nav-link">Introduction</a></li><li><a href="installation.html" class="nav-link">Installation</a></li><li><a href="quickstart.html" class="nav-link">Quick Start</a></li><li><a href="configuration.html" class="nav-link">Configuration</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">Understand</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="architecture.html" class="nav-link">Architecture</a></li><li><a href="agentic-loop.html" class="nav-link">Agentic Loop</a></li><li><a href="memory-system.html" class="nav-link">Memory System</a></li><li><a href="security.html" class="nav-link">Security</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (66)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (7)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Configure</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="multi-llm.html" class="nav-link">Multi-LLM Providers</a></li><li><a href="scheduled-tasks.html" class="nav-link">Scheduled Tasks</a></li><li><a href="webui.html" class="nav-link">WebUI Dashboard</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li><li><a href="create-plugin.html" class="nav-link">Create a Plugin</a></li><li><a href="api-events.html" class="nav-link">Plugin Lifecycle</a></li><li><a href="mcp-servers.html" class="nav-link">MCP Servers</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (76)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (8)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">SDK Reference</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="sdk-overview.html" class="nav-link">Overview</a></li><li><a href="sdk-ton.html" class="nav-link">TON Blockchain</a></li><li><a href="sdk-dex.html" class="nav-link">DEX Trading</a></li><li><a href="sdk-dns.html" class="nav-link">DNS &amp; Domains</a></li><li><a href="sdk-telegram.html" class="nav-link active">Telegram</a></li><li><a href="sdk-bot.html" class="nav-link">Bot SDK</a></li><li><a href="sdk-utilities.html" class="nav-link">Utilities</a></li><li><a href="sdk-errors.html" class="nav-link">Error Handling</a></li><li><a href="tutorial-payment-bot.html" class="nav-link">Tutorial: Payment Bot</a></li><li><a href="tutorial-dex-bot.html" class="nav-link">Tutorial: DEX Bot</a></li><li><a href="tutorial-inline-bot.html" class="nav-link">Tutorial: Inline Bot</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="api-commands.html" class="nav-link">Admin Commands</a></li><li><a href="api-config.html" class="nav-link">Config Schema</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
         </nav></aside>
         <main class="main"><article class="content">
 
-            <h1>sdk.telegram &mdash; Telegram</h1>
+            <h1>sdk.telegram: Telegram</h1>
             <p class="lead">Complete reference for the 52 Telegram methods: messaging, media, moderation, stars, gifts, collectibles, and more. Access via <code>sdk.telegram</code> in any plugin tool executor or lifecycle hook.</p>
 
             <!-- ────────────────────────────────────────────────── -->
@@ -145,7 +144,7 @@ export const tools = [
 
                 <h3>getMe</h3>
                 <div class="code-block"><div class="code-header"><span>Signature</span></div><pre><code class="language-typescript">getMe(): TelegramUser | null</code></pre></div>
-                <p>Returns the bot's own <code>TelegramUser</code> info synchronously. Returns <code>null</code> if the Telegram bridge is not connected. Note: this is <strong>not</strong> async &mdash; it returns directly, not a Promise.</p>
+                <p>Returns the bot's own <code>TelegramUser</code> info synchronously. Returns <code>null</code> if the Telegram bridge is not connected. Note: this is <strong>not</strong> async: it returns directly, not a Promise.</p>
                 <div class="code-block"><div class="code-header"><span>Example</span></div><pre><code class="language-typescript">const me = sdk.telegram.getMe();
 if (!me) return { success: false, error: "Telegram not connected" };
 console.log(`I am @${me.username}, ID: ${me.id}`);</code></pre></div>
@@ -179,7 +178,7 @@ sendSticker(chatId: string, sticker: string | Buffer): Promise&lt;number&gt;
 downloadMedia(chatId: string, messageId: number): Promise&lt;Buffer | null&gt;</code></pre></div>
 
                 <p>All media send methods accept either a file path (string) or a <code>Buffer</code>. The <code>MediaSendOptions</code> type provides caption, reply-to, inline keyboard, and dimension/duration hints for video and voice.</p>
-                <p><code>sendFile</code> additionally accepts <code>fileName</code> in its options to set the displayed file name. <code>sendSticker</code> takes no options &mdash; just the chat ID and sticker data.</p>
+                <p><code>sendFile</code> additionally accepts <code>fileName</code> in its options to set the displayed file name. <code>sendSticker</code> takes no options: just the chat ID and sticker data.</p>
                 <p><strong>Throws:</strong> <code>PluginSDKError</code> with code <code>BRIDGE_NOT_CONNECTED</code> or <code>OPERATION_FAILED</code> (except <code>downloadMedia</code> which returns <code>null</code> on failure).</p>
 
                 <div class="code-block"><div class="code-header"><span>Send media examples</span></div><pre><code class="language-typescript">// Photo with caption and reply
@@ -353,7 +352,7 @@ if (peer) {
 // Get chat info
 const chat = await sdk.telegram.getChatInfo(chatId);
 if (chat) {
-  console.log(`${chat.title} (${chat.type}) — ${chat.membersCount ?? "?"} members`);
+  console.log(`${chat.title} (${chat.type}), ${chat.membersCount ?? "?"} members`);
 }
 
 // List recent dialogs
@@ -474,7 +473,7 @@ console.log(`Stars balance: ${balance}`);
 const txs = await sdk.telegram.getStarsTransactions(10);
 for (const tx of txs) {
   const direction = tx.amount &gt; 0 ? "received" : "spent";
-  console.log(`${direction} ${Math.abs(tx.amount)} stars — ${tx.description ?? "no description"}`);
+  console.log(`${direction} ${Math.abs(tx.amount)} stars, ${tx.description ?? "no description"}`);
 }</code></pre></div>
             </section>
 
@@ -659,7 +658,7 @@ if (storyId) {
 getRawClient(): unknown | null
 isAvailable(): boolean</code></pre></div>
 
-                <p><code>getRawClient()</code> returns the underlying GramJS <code>TelegramClient</code> instance typed as <code>unknown</code>. Cast it in your plugin to use MTProto APIs not covered by the SDK. This is an escape hatch &mdash; prefer the typed SDK methods when possible.</p>
+                <p><code>getRawClient()</code> returns the underlying GramJS <code>TelegramClient</code> instance typed as <code>unknown</code>. Cast it in your plugin to use MTProto APIs not covered by the SDK. This is an escape hatch: prefer the typed SDK methods when possible.</p>
 
                 <div class="code-block"><div class="code-header"><span>Example: raw client usage</span></div><pre><code class="language-typescript">// Always check availability first
 if (!sdk.telegram.isAvailable()) {

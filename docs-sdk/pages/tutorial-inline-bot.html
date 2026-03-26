@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,11 +29,10 @@
         <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
             <div class="nav-section"><div class="nav-section-title">Start Here</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="/index.html" class="nav-link">Introduction</a></li><li><a href="installation.html" class="nav-link">Installation</a></li><li><a href="quickstart.html" class="nav-link">Quick Start</a></li><li><a href="configuration.html" class="nav-link">Configuration</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">Understand</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="architecture.html" class="nav-link">Architecture</a></li><li><a href="agentic-loop.html" class="nav-link">Agentic Loop</a></li><li><a href="memory-system.html" class="nav-link">Memory System</a></li><li><a href="security.html" class="nav-link">Security</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (66)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (7)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Configure</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="multi-llm.html" class="nav-link">Multi-LLM Providers</a></li><li><a href="scheduled-tasks.html" class="nav-link">Scheduled Tasks</a></li><li><a href="webui.html" class="nav-link">WebUI Dashboard</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li><li><a href="create-plugin.html" class="nav-link">Create a Plugin</a></li><li><a href="api-events.html" class="nav-link">Plugin Lifecycle</a></li><li><a href="mcp-servers.html" class="nav-link">MCP Servers</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (76)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (8)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">SDK Reference</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="sdk-overview.html" class="nav-link">Overview</a></li><li><a href="sdk-ton.html" class="nav-link">TON Blockchain</a></li><li><a href="sdk-dex.html" class="nav-link">DEX Trading</a></li><li><a href="sdk-dns.html" class="nav-link">DNS &amp; Domains</a></li><li><a href="sdk-telegram.html" class="nav-link">Telegram</a></li><li><a href="sdk-bot.html" class="nav-link">Bot SDK</a></li><li><a href="sdk-utilities.html" class="nav-link">Utilities</a></li><li><a href="sdk-errors.html" class="nav-link">Error Handling</a></li><li><a href="tutorial-payment-bot.html" class="nav-link">Tutorial: Payment Bot</a></li><li><a href="tutorial-dex-bot.html" class="nav-link">Tutorial: DEX Bot</a></li><li><a href="tutorial-inline-bot.html" class="nav-link active">Tutorial: Inline Bot</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="api-commands.html" class="nav-link">Admin Commands</a></li><li><a href="api-config.html" class="nav-link">Config Schema</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
         </nav></aside>
         <main class="main"><article class="content">
 
@@ -49,7 +48,7 @@
                     <li>Handles callback button presses with glob patterns</li>
                     <li>Tracks chosen inline results for analytics</li>
                 </ul>
-                <p>We will build a <strong>TON Price Ticker</strong> &mdash; an inline bot that lets users search for token prices and share them in any chat with interactive buttons.</p>
+                <p>We will build a <strong>TON Price Ticker</strong>: an inline bot that lets users search for token prices and share them in any chat with interactive buttons.</p>
             </section>
 
             <section class="section" id="prerequisites">
@@ -65,7 +64,7 @@
             <section class="section" id="step-1">
                 <h2>Step 1: Manifest with BotManifest</h2>
                 <p>The manifest must declare <code>bot</code> capabilities. Without this, <code>sdk.bot</code> will be <code>null</code> at runtime.</p>
-                <div class="code-block"><div class="code-header"><span>ton-ticker/index.ts &mdash; Manifest</span></div><pre><code class="language-typescript">import type {
+                <div class="code-block"><div class="code-header"><span>ton-ticker/index.ts: Manifest</span></div><pre><code class="language-typescript">import type {
   PluginSDK,
   SimpleToolDef,
   PluginManifest,
@@ -78,7 +77,7 @@
 export const manifest: PluginManifest = {
   name: "ton-ticker",
   version: "1.0.0",
-  description: "Inline TON price ticker — search tokens and share prices in any chat",
+  description: "Inline TON price ticker, search tokens and share prices in any chat",
   bot: {
     inline: true,      // Enable inline query handling
     callbacks: true,   // Enable callback query handling
@@ -181,13 +180,13 @@ const grammyMarkup = priceKeyboard.toGrammy();
 // .rows gives you the raw ButtonDef[][] with prefixed callbacks
 // e.g. "ton-ticker:refresh:TON" instead of "refresh:TON"
 const rawRows = priceKeyboard.rows;</code></pre></div>
-                <p>When you specify <code>keyboard</code> inside an <code>InlineResult</code> object, the platform automatically builds the keyboard for you &mdash; you pass raw <code>ButtonDef[][]</code> and it handles the rendering. The <code>sdk.bot.keyboard()</code> method is useful when you need to build keyboards outside of inline results, for example when editing messages via <code>editInlineMessage()</code>.</p>
+                <p>When you specify <code>keyboard</code> inside an <code>InlineResult</code> object, the platform automatically builds the keyboard for you: you pass raw <code>ButtonDef[][]</code> and it handles the rendering. The <code>sdk.bot.keyboard()</code> method is useful when you need to build keyboards outside of inline results, for example when editing messages via <code>editInlineMessage()</code>.</p>
             </section>
 
             <section class="section" id="step-4">
                 <h2>Step 4: Callback Handlers</h2>
                 <p>Register callback handlers with glob patterns. The plugin namespace prefix is automatically stripped, so your patterns match against your raw callback data.</p>
-                <div class="code-block"><div class="code-header"><span>Callback handlers with glob patterns</span></div><pre><code class="language-typescript">// Handle "Refresh Price" button — matches "refresh:TON", "refresh:USDT", etc.
+                <div class="code-block"><div class="code-header"><span>Callback handlers with glob patterns</span></div><pre><code class="language-typescript">// Handle "Refresh Price" button, matches "refresh:TON", "refresh:USDT", etc.
 sdk.bot.onCallback("refresh:*", async (ctx: CallbackContext) =&gt; {
   const symbol = ctx.data.split(":")[1];
   const token = TOKENS.find((t) =&gt; t.symbol === symbol);
@@ -228,15 +227,15 @@ sdk.bot.onCallback("refresh:*", async (ctx: CallbackContext) =&gt; {
   await ctx.answer(`${token.symbol}: ${priceText}`);
 });
 
-// Handle buy/sell actions (example — these would trigger your trading logic)
+// Handle buy/sell actions (example, these would trigger your trading logic)
 sdk.bot.onCallback("buy:*", async (ctx: CallbackContext) =&gt; {
   const symbol = ctx.data.split(":")[1];
-  await ctx.answer(`Buy ${symbol} — use /buy command in a direct chat with the bot`, true);
+  await ctx.answer(`Buy ${symbol}, use /buy command in a direct chat with the bot`, true);
 });
 
 sdk.bot.onCallback("sell:*", async (ctx: CallbackContext) =&gt; {
   const symbol = ctx.data.split(":")[1];
-  await ctx.answer(`Sell ${symbol} — use /sell command in a direct chat with the bot`, true);
+  await ctx.answer(`Sell ${symbol}, use /sell command in a direct chat with the bot`, true);
 });</code></pre></div>
             </section>
 
@@ -284,7 +283,7 @@ sdk.bot.onCallback("sell:*", async (ctx: CallbackContext) =&gt; {
             <section class="section" id="step-6">
                 <h2>Step 6: Complete Plugin Code</h2>
                 <p>Here is the entire plugin in one file, ready to copy into your plugins directory:</p>
-                <div class="code-block"><div class="code-header"><span>ton-ticker/index.ts &mdash; Complete Plugin</span></div><pre><code class="language-typescript">import type {
+                <div class="code-block"><div class="code-header"><span>ton-ticker/index.ts: Complete Plugin</span></div><pre><code class="language-typescript">import type {
   PluginSDK,
   SimpleToolDef,
   PluginManifest,
@@ -297,7 +296,7 @@ sdk.bot.onCallback("sell:*", async (ctx: CallbackContext) =&gt; {
 export const manifest: PluginManifest = {
   name: "ton-ticker",
   version: "1.0.0",
-  description: "Inline TON price ticker — search tokens and share prices in any chat",
+  description: "Inline TON price ticker, search tokens and share prices in any chat",
   bot: {
     inline: true,
     callbacks: true,
@@ -331,7 +330,7 @@ async function getTokenPrice(
 
 export const start = async (sdk: PluginSDK) =&gt; {
   if (!sdk.bot) {
-    sdk.log.warn("Bot SDK not available — skipping inline setup");
+    sdk.log.warn("Bot SDK not available, skipping inline setup");
     return;
   }
 

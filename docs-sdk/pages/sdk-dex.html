@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sdk.ton.dex — DEX Trading - Teleton Agent Documentation</title>
+    <title>sdk.ton.dex, DEX Trading - Teleton Agent Documentation</title>
     <meta name="description" content="Decentralized exchange operations via STON.fi and DeDust aggregators in the Teleton Plugin SDK.">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -29,15 +29,14 @@
         <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
             <div class="nav-section"><div class="nav-section-title">Start Here</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="/index.html" class="nav-link">Introduction</a></li><li><a href="installation.html" class="nav-link">Installation</a></li><li><a href="quickstart.html" class="nav-link">Quick Start</a></li><li><a href="configuration.html" class="nav-link">Configuration</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">Understand</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="architecture.html" class="nav-link">Architecture</a></li><li><a href="agentic-loop.html" class="nav-link">Agentic Loop</a></li><li><a href="memory-system.html" class="nav-link">Memory System</a></li><li><a href="security.html" class="nav-link">Security</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (66)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (7)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Configure</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="multi-llm.html" class="nav-link">Multi-LLM Providers</a></li><li><a href="scheduled-tasks.html" class="nav-link">Scheduled Tasks</a></li><li><a href="webui.html" class="nav-link">WebUI Dashboard</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li><li><a href="create-plugin.html" class="nav-link">Create a Plugin</a></li><li><a href="api-events.html" class="nav-link">Plugin Lifecycle</a></li><li><a href="mcp-servers.html" class="nav-link">MCP Servers</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (76)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (8)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">SDK Reference</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="sdk-overview.html" class="nav-link">Overview</a></li><li><a href="sdk-ton.html" class="nav-link">TON Blockchain</a></li><li><a href="sdk-dex.html" class="nav-link active">DEX Trading</a></li><li><a href="sdk-dns.html" class="nav-link">DNS &amp; Domains</a></li><li><a href="sdk-telegram.html" class="nav-link">Telegram</a></li><li><a href="sdk-bot.html" class="nav-link">Bot SDK</a></li><li><a href="sdk-utilities.html" class="nav-link">Utilities</a></li><li><a href="sdk-errors.html" class="nav-link">Error Handling</a></li><li><a href="tutorial-payment-bot.html" class="nav-link">Tutorial: Payment Bot</a></li><li><a href="tutorial-dex-bot.html" class="nav-link">Tutorial: DEX Bot</a></li><li><a href="tutorial-inline-bot.html" class="nav-link">Tutorial: Inline Bot</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="api-commands.html" class="nav-link">Admin Commands</a></li><li><a href="api-config.html" class="nav-link">Config Schema</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
         </nav></aside>
         <main class="main"><article class="content">
 
-            <h1>sdk.ton.dex — DEX Trading</h1>
+            <h1>sdk.ton.dex, DEX Trading</h1>
             <p class="lead">Decentralized exchange operations via STON.fi and DeDust aggregators. Access via <code>sdk.ton.dex</code> in your plugin.</p>
 
             <section class="section" id="quick-example">
@@ -261,12 +260,12 @@ console.log(`STON.fi swap: ${result.amountIn} -> ${result.expectedOutput}`);</co
             <section class="section" id="risk-warnings">
                 <h2>Risk Warnings</h2>
                 <ul>
-                    <li><strong>Swaps are irreversible</strong> — once a swap transaction is sent to the blockchain, it cannot be undone. Always confirm with the user before executing.</li>
-                    <li><strong>Slippage tolerance</strong> — setting slippage too low may cause the swap to fail. Setting it too high may result in unfavorable rates. The default 1% is suitable for most trades.</li>
-                    <li><strong>Price impact</strong> — large trades relative to pool liquidity will move the price. Check <code>priceImpact</code> in the quote before executing. Warn users if impact exceeds 3-5%.</li>
-                    <li><strong>MEV / frontrunning</strong> — on-chain swaps on TON are less susceptible to MEV than Ethereum, but large trades can still be sandwiched. Consider splitting large trades.</li>
-                    <li><strong>Token verification</strong> — always verify the jetton address before swapping. Use <code>sdk.ton.getJettonInfo()</code> to check the <code>verified</code> field and confirm the token is legitimate.</li>
-                    <li><strong>Liquidity</strong> — a quote returning <code>null</code> means the DEX has no liquidity for the pair. Both DEXes returning null means the token is not tradable.</li>
+                    <li><strong>Swaps are irreversible</strong>, once a swap transaction is sent to the blockchain, it cannot be undone. Always confirm with the user before executing.</li>
+                    <li><strong>Slippage tolerance</strong>, setting slippage too low may cause the swap to fail. Setting it too high may result in unfavorable rates. The default 1% is suitable for most trades.</li>
+                    <li><strong>Price impact</strong>, large trades relative to pool liquidity will move the price. Check <code>priceImpact</code> in the quote before executing. Warn users if impact exceeds 3-5%.</li>
+                    <li><strong>MEV / frontrunning</strong>, on-chain swaps on TON are less susceptible to MEV than Ethereum, but large trades can still be sandwiched. Consider splitting large trades.</li>
+                    <li><strong>Token verification</strong>, always verify the jetton address before swapping. Use <code>sdk.ton.getJettonInfo()</code> to check the <code>verified</code> field and confirm the token is legitimate.</li>
+                    <li><strong>Liquidity</strong>, a quote returning <code>null</code> means the DEX has no liquidity for the pair. Both DEXes returning null means the token is not tradable.</li>
                 </ul>
             </section>
 

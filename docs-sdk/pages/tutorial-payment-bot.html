@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,11 +29,10 @@
         <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
             <div class="nav-section"><div class="nav-section-title">Start Here</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="/index.html" class="nav-link">Introduction</a></li><li><a href="installation.html" class="nav-link">Installation</a></li><li><a href="quickstart.html" class="nav-link">Quick Start</a></li><li><a href="configuration.html" class="nav-link">Configuration</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">Understand</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="architecture.html" class="nav-link">Architecture</a></li><li><a href="agentic-loop.html" class="nav-link">Agentic Loop</a></li><li><a href="memory-system.html" class="nav-link">Memory System</a></li><li><a href="security.html" class="nav-link">Security</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (66)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (7)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Configure</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="multi-llm.html" class="nav-link">Multi-LLM Providers</a></li><li><a href="scheduled-tasks.html" class="nav-link">Scheduled Tasks</a></li><li><a href="webui.html" class="nav-link">WebUI Dashboard</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li><li><a href="create-plugin.html" class="nav-link">Create a Plugin</a></li><li><a href="api-events.html" class="nav-link">Plugin Lifecycle</a></li><li><a href="mcp-servers.html" class="nav-link">MCP Servers</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (76)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (8)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">SDK Reference</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="sdk-overview.html" class="nav-link">Overview</a></li><li><a href="sdk-ton.html" class="nav-link">TON Blockchain</a></li><li><a href="sdk-dex.html" class="nav-link">DEX Trading</a></li><li><a href="sdk-dns.html" class="nav-link">DNS &amp; Domains</a></li><li><a href="sdk-telegram.html" class="nav-link">Telegram</a></li><li><a href="sdk-bot.html" class="nav-link">Bot SDK</a></li><li><a href="sdk-utilities.html" class="nav-link">Utilities</a></li><li><a href="sdk-errors.html" class="nav-link">Error Handling</a></li><li><a href="tutorial-payment-bot.html" class="nav-link active">Tutorial: Payment Bot</a></li><li><a href="tutorial-dex-bot.html" class="nav-link">Tutorial: DEX Bot</a></li><li><a href="tutorial-inline-bot.html" class="nav-link">Tutorial: Inline Bot</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="api-commands.html" class="nav-link">Admin Commands</a></li><li><a href="api-config.html" class="nav-link">Config Schema</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
         </nav></aside>
         <main class="main"><article class="content">
 
@@ -63,20 +62,20 @@
             <section class="section" id="step-1">
                 <h2>Step 1: Manifest &amp; Structure</h2>
                 <p>Create a new plugin directory and define the manifest. The manifest declares the plugin's identity and is required for proper registration.</p>
-                <div class="code-block"><div class="code-header"><span>pay-verify/index.ts &mdash; Manifest</span></div><pre><code class="language-typescript">import type { PluginSDK, SimpleToolDef, PluginManifest } from "@teleton-agent/sdk";
+                <div class="code-block"><div class="code-header"><span>pay-verify/index.ts: Manifest</span></div><pre><code class="language-typescript">import type { PluginSDK, SimpleToolDef, PluginManifest } from "@teleton-agent/sdk";
 import type Database from "better-sqlite3";
 
 export const manifest: PluginManifest = {
   name: "pay-verify",
   version: "1.0.0",
-  description: "Payment verification bot — generate requests, verify TON transfers on-chain",
+  description: "Payment verification bot, generate requests, verify TON transfers on-chain",
 };</code></pre></div>
             </section>
 
             <section class="section" id="step-2">
                 <h2>Step 2: Database Migration</h2>
                 <p>The <code>migrate()</code> export runs once when the plugin is first loaded (and on schema changes). We create two tables: one for pending payment requests, and the critical <code>used_transactions</code> table for replay protection.</p>
-                <div class="code-block"><div class="code-header"><span>pay-verify/index.ts &mdash; Migration</span></div><pre><code class="language-typescript">export const migrate = (db: Database.Database): void =&gt; {
+                <div class="code-block"><div class="code-header"><span>pay-verify/index.ts: Migration</span></div><pre><code class="language-typescript">export const migrate = (db: Database.Database): void =&gt; {
   db.exec(`
     CREATE TABLE IF NOT EXISTS payment_requests (
       id TEXT PRIMARY KEY,
@@ -101,7 +100,7 @@ export const manifest: PluginManifest = {
             </section>
 
             <section class="section" id="step-3">
-                <h2>Step 3: Tool &mdash; generate_payment_request</h2>
+                <h2>Step 3: Tool: generate_payment_request</h2>
                 <p>This tool creates a payment request with a unique memo. The user sends TON to the bot's wallet with this memo, and the verification tool can then match it.</p>
                 <div class="code-block"><div class="code-header"><span>generate_payment_request tool</span></div><pre><code class="language-typescript">{
   name: "pay_generate_request",
@@ -154,7 +153,7 @@ export const manifest: PluginManifest = {
             </section>
 
             <section class="section" id="step-4">
-                <h2>Step 4: Tool &mdash; verify_payment</h2>
+                <h2>Step 4: Tool: verify_payment</h2>
                 <p>This tool uses <code>sdk.ton.verifyPayment()</code> to check the blockchain for a matching transaction. The SDK handles amount tolerance (1%), memo matching, time windowing, and replay protection internally.</p>
                 <div class="code-block"><div class="code-header"><span>verify_payment tool</span></div><pre><code class="language-typescript">{
   name: "pay_verify_payment",
@@ -221,7 +220,7 @@ export const manifest: PluginManifest = {
             </section>
 
             <section class="section" id="step-5">
-                <h2>Step 5: Tool &mdash; check_balance</h2>
+                <h2>Step 5: Tool: check_balance</h2>
                 <p>A convenience tool that shows the bot's wallet balance and recent incoming transactions.</p>
                 <div class="code-block"><div class="code-header"><span>check_balance tool</span></div><pre><code class="language-typescript">{
   name: "pay_check_balance",
@@ -266,13 +265,13 @@ export const manifest: PluginManifest = {
             <section class="section" id="step-6">
                 <h2>Step 6: Putting It All Together</h2>
                 <p>Here is the complete plugin file, ready to copy into your plugins directory:</p>
-                <div class="code-block"><div class="code-header"><span>pay-verify/index.ts &mdash; Complete Plugin</span></div><pre><code class="language-typescript">import type { PluginSDK, SimpleToolDef, PluginManifest } from "@teleton-agent/sdk";
+                <div class="code-block"><div class="code-header"><span>pay-verify/index.ts: Complete Plugin</span></div><pre><code class="language-typescript">import type { PluginSDK, SimpleToolDef, PluginManifest } from "@teleton-agent/sdk";
 import type Database from "better-sqlite3";
 
 export const manifest: PluginManifest = {
   name: "pay-verify",
   version: "1.0.0",
-  description: "Payment verification bot — generate requests, verify TON transfers on-chain",
+  description: "Payment verification bot, generate requests, verify TON transfers on-chain",
 };
 
 export const migrate = (db: Database.Database): void =&gt; {
@@ -453,7 +452,7 @@ export const tools = (sdk: PluginSDK): SimpleToolDef[] =&gt; [
                     <li>Wait for the transaction to confirm on-chain (usually 5-15 seconds).</li>
                     <li>Ask the agent: <em>"Verify payment request [id]"</em></li>
                     <li>The agent should confirm the payment with the transaction hash and sender address.</li>
-                    <li>Try verifying the same request again &mdash; it should report "already verified" (replay protection).</li>
+                    <li>Try verifying the same request again: it should report "already verified" (replay protection).</li>
                 </ol>
             </section>
 

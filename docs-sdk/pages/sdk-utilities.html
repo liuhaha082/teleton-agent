@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,11 +29,10 @@
         <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
             <div class="nav-section"><div class="nav-section-title">Start Here</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="/index.html" class="nav-link">Introduction</a></li><li><a href="installation.html" class="nav-link">Installation</a></li><li><a href="quickstart.html" class="nav-link">Quick Start</a></li><li><a href="configuration.html" class="nav-link">Configuration</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">Understand</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="architecture.html" class="nav-link">Architecture</a></li><li><a href="agentic-loop.html" class="nav-link">Agentic Loop</a></li><li><a href="memory-system.html" class="nav-link">Memory System</a></li><li><a href="security.html" class="nav-link">Security</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (66)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (7)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Configure</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="multi-llm.html" class="nav-link">Multi-LLM Providers</a></li><li><a href="scheduled-tasks.html" class="nav-link">Scheduled Tasks</a></li><li><a href="webui.html" class="nav-link">WebUI Dashboard</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li><li><a href="create-plugin.html" class="nav-link">Create a Plugin</a></li><li><a href="api-events.html" class="nav-link">Plugin Lifecycle</a></li><li><a href="mcp-servers.html" class="nav-link">MCP Servers</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (76)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (8)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">SDK Reference</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="sdk-overview.html" class="nav-link">Overview</a></li><li><a href="sdk-ton.html" class="nav-link">TON Blockchain</a></li><li><a href="sdk-dex.html" class="nav-link">DEX Trading</a></li><li><a href="sdk-dns.html" class="nav-link">DNS &amp; Domains</a></li><li><a href="sdk-telegram.html" class="nav-link">Telegram</a></li><li><a href="sdk-bot.html" class="nav-link">Bot SDK</a></li><li><a href="sdk-utilities.html" class="nav-link active">Utilities</a></li><li><a href="sdk-errors.html" class="nav-link">Error Handling</a></li><li><a href="tutorial-payment-bot.html" class="nav-link">Tutorial: Payment Bot</a></li><li><a href="tutorial-dex-bot.html" class="nav-link">Tutorial: DEX Bot</a></li><li><a href="tutorial-inline-bot.html" class="nav-link">Tutorial: Inline Bot</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="api-commands.html" class="nav-link">Admin Commands</a></li><li><a href="api-config.html" class="nav-link">Config Schema</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
         </nav></aside>
         <main class="main"><article class="content">
 
@@ -44,7 +43,7 @@
 
             <section class="section" id="secrets">
                 <h2>sdk.secrets</h2>
-                <p>The <code>SecretsSDK</code> namespace provides secure, read-only access to plugin credentials. Secrets are never exposed in logs or tool output &mdash; they are managed separately from application config.</p>
+                <p>The <code>SecretsSDK</code> namespace provides secure, read-only access to plugin credentials. Secrets are never exposed in logs or tool output: they are managed separately from application config.</p>
 
                 <h3>Methods</h3>
                 <div class="table-wrapper"><table>
@@ -59,9 +58,9 @@
                 <h3>Secret Resolution Order</h3>
                 <p>When you call <code>sdk.secrets.get("api_key")</code>, the SDK checks these sources in order:</p>
                 <ol>
-                    <li><strong>Environment variable</strong> &mdash; <code>${PLUGIN_NAME_UPPER}_${KEY_UPPER}</code> (e.g. <code>WEATHER_REPORT_API_KEY</code>)</li>
-                    <li><strong>Secrets store</strong> &mdash; Set via the Telegram admin command <code>/plugin set &lt;plugin&gt; &lt;key&gt; &lt;value&gt;</code></li>
-                    <li><strong>pluginConfig</strong> &mdash; From the <code>plugins:</code> section in <code>config.yaml</code></li>
+                    <li><strong>Environment variable</strong>: <code>${PLUGIN_NAME_UPPER}_${KEY_UPPER}</code> (e.g. <code>WEATHER_REPORT_API_KEY</code>)</li>
+                    <li><strong>Secrets store</strong>: Set via the Telegram admin command <code>/plugin set &lt;plugin&gt; &lt;key&gt; &lt;value&gt;</code></li>
+                    <li><strong>pluginConfig</strong>: From the <code>plugins:</code> section in <code>config.yaml</code></li>
                 </ol>
                 <p>The first non-empty value wins. This allows you to use environment variables in production while falling back to config during development.</p>
 
@@ -139,7 +138,7 @@ if (sdk.secrets.has("premium_key")) {
 
             <section class="section" id="storage">
                 <h2>sdk.storage</h2>
-                <p>The <code>StorageSDK</code> namespace provides simple key-value persistence. It auto-creates a <code>_kv</code> table in the plugin's isolated database &mdash; no <code>migrate()</code> export required.</p>
+                <p>The <code>StorageSDK</code> namespace provides simple key-value persistence. It auto-creates a <code>_kv</code> table in the plugin's isolated database: no <code>migrate()</code> export required.</p>
                 <p><strong>Note:</strong> <code>sdk.storage</code> is <code>null</code> if no database is available (rare edge case). Always check for null before use.</p>
 
                 <h3>Methods</h3>
@@ -273,14 +272,14 @@ sdk.log.debug("Raw API response", { status: response.status, body: data });
             <section class="section" id="database">
                 <h2>sdk.db</h2>
                 <p>The <code>sdk.db</code> property exposes a <a href="https://github.com/WiseLibs/better-sqlite3" target="_blank" rel="noopener">better-sqlite3</a> <code>Database</code> instance for plugins that need full SQL capabilities beyond key-value storage.</p>
-                <p><strong>Important:</strong> <code>sdk.db</code> is <code>null</code> unless your plugin exports a <code>migrate()</code> function. Each plugin gets its own isolated SQLite database file &mdash; plugins cannot access each other's data.</p>
+                <p><strong>Important:</strong> <code>sdk.db</code> is <code>null</code> unless your plugin exports a <code>migrate()</code> function. Each plugin gets its own isolated SQLite database file: plugins cannot access each other's data.</p>
 
                 <h3>The migrate() Pattern</h3>
                 <p>Export a <code>migrate</code> function from your plugin entry point. It receives the raw <code>better-sqlite3</code> database instance and runs once when the plugin is loaded:</p>
                 <div class="code-block"><div class="code-header"><span>Plugin with Database Migration</span></div><pre><code class="language-typescript">import type { PluginSDK, SimpleToolDef } from "@teleton-agent/sdk";
 import type Database from "better-sqlite3";
 
-// Called once when plugin is loaded — create your tables here
+// Called once when plugin is loaded, create your tables here
 export function migrate(db: Database.Database): void {
   db.exec(`
     CREATE TABLE IF NOT EXISTS leaderboard (

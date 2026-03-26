@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sdk.ton.dns — DNS &amp; Domains - Teleton Agent Documentation</title>
+    <title>sdk.ton.dns, DNS &amp; Domains - Teleton Agent Documentation</title>
     <meta name="description" content="Manage .ton domains: check availability, resolve addresses, participate in auctions, and link wallets via the Teleton Plugin SDK.">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -29,15 +29,14 @@
         <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
             <div class="nav-section"><div class="nav-section-title">Start Here</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="/index.html" class="nav-link">Introduction</a></li><li><a href="installation.html" class="nav-link">Installation</a></li><li><a href="quickstart.html" class="nav-link">Quick Start</a></li><li><a href="configuration.html" class="nav-link">Configuration</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">Understand</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="architecture.html" class="nav-link">Architecture</a></li><li><a href="agentic-loop.html" class="nav-link">Agentic Loop</a></li><li><a href="memory-system.html" class="nav-link">Memory System</a></li><li><a href="security.html" class="nav-link">Security</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (66)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (7)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Configure</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="multi-llm.html" class="nav-link">Multi-LLM Providers</a></li><li><a href="scheduled-tasks.html" class="nav-link">Scheduled Tasks</a></li><li><a href="webui.html" class="nav-link">WebUI Dashboard</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li><li><a href="create-plugin.html" class="nav-link">Create a Plugin</a></li><li><a href="api-events.html" class="nav-link">Plugin Lifecycle</a></li><li><a href="mcp-servers.html" class="nav-link">MCP Servers</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (76)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (8)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">SDK Reference</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="sdk-overview.html" class="nav-link">Overview</a></li><li><a href="sdk-ton.html" class="nav-link">TON Blockchain</a></li><li><a href="sdk-dex.html" class="nav-link">DEX Trading</a></li><li><a href="sdk-dns.html" class="nav-link active">DNS &amp; Domains</a></li><li><a href="sdk-telegram.html" class="nav-link">Telegram</a></li><li><a href="sdk-bot.html" class="nav-link">Bot SDK</a></li><li><a href="sdk-utilities.html" class="nav-link">Utilities</a></li><li><a href="sdk-errors.html" class="nav-link">Error Handling</a></li><li><a href="tutorial-payment-bot.html" class="nav-link">Tutorial: Payment Bot</a></li><li><a href="tutorial-dex-bot.html" class="nav-link">Tutorial: DEX Bot</a></li><li><a href="tutorial-inline-bot.html" class="nav-link">Tutorial: Inline Bot</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="api-commands.html" class="nav-link">Admin Commands</a></li><li><a href="api-config.html" class="nav-link">Config Schema</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
         </nav></aside>
         <main class="main"><article class="content">
 
-            <h1>sdk.ton.dns — DNS &amp; Domains</h1>
+            <h1>sdk.ton.dns, DNS &amp; Domains</h1>
             <p class="lead">Manage .ton domains: check availability, resolve addresses, participate in auctions, and link wallets. Access via <code>sdk.ton.dns</code> in your plugin.</p>
 
             <section class="section" id="quick-example">
@@ -87,7 +86,7 @@ if (resolved) {
                 <p>Check whether a .ton domain is available, and if taken, who owns it.</p>
                 <p><strong>Parameters:</strong></p>
                 <ul>
-                    <li><code>domain</code> (<code>string</code>) — Domain name (e.g. <code>"myproject.ton"</code>)</li>
+                    <li><code>domain</code> (<code>string</code>), Domain name (e.g. <code>"myproject.ton"</code>)</li>
                 </ul>
 
                 <div class="code-block"><div class="code-header"><span>Domain availability check</span></div><pre><code class="language-typescript">const result = await sdk.ton.dns.check("wallet.ton");
@@ -107,7 +106,7 @@ if (!result.available) {
                 <p>Resolve a .ton domain to its linked wallet address. Returns <code>null</code> if the domain is not registered.</p>
                 <p><strong>Parameters:</strong></p>
                 <ul>
-                    <li><code>domain</code> (<code>string</code>) — Domain name (e.g. <code>"foundation.ton"</code>)</li>
+                    <li><code>domain</code> (<code>string</code>), Domain name (e.g. <code>"foundation.ton"</code>)</li>
                 </ul>
 
                 <div class="code-block"><div class="code-header"><span>Domain resolution</span></div><pre><code class="language-typescript">const resolved = await sdk.ton.dns.resolve("foundation.ton");
@@ -135,7 +134,7 @@ if (resolved) {
                 <p>List currently active DNS auctions on the TON network.</p>
                 <p><strong>Parameters:</strong></p>
                 <ul>
-                    <li><code>limit</code> (<code>number</code>, optional) — Maximum auctions to return.</li>
+                    <li><code>limit</code> (<code>number</code>, optional), Maximum auctions to return.</li>
                 </ul>
 
                 <div class="code-block"><div class="code-header"><span>Browse active auctions</span></div><pre><code class="language-typescript">const auctions = await sdk.ton.dns.getAuctions(10);
@@ -157,7 +156,7 @@ for (const auction of auctions) {
                 <p>Start a new auction for an unclaimed .ton domain. This places an initial bid.</p>
                 <p><strong>Parameters:</strong></p>
                 <ul>
-                    <li><code>domain</code> (<code>string</code>) — Domain to auction (e.g. <code>"newproject.ton"</code>)</li>
+                    <li><code>domain</code> (<code>string</code>), Domain to auction (e.g. <code>"newproject.ton"</code>)</li>
                 </ul>
 
                 <div class="code-block"><div class="code-header"><span>Start an auction</span></div><pre><code class="language-typescript">const result = await sdk.ton.dns.startAuction("newproject.ton");
@@ -175,8 +174,8 @@ if (result.success) {
                 <p>Place a bid on an active auction. Your bid must exceed the current highest bid.</p>
                 <p><strong>Parameters:</strong></p>
                 <ul>
-                    <li><code>domain</code> (<code>string</code>) — Domain with active auction</li>
-                    <li><code>amount</code> (<code>number</code>) — Bid amount in TON</li>
+                    <li><code>domain</code> (<code>string</code>), Domain with active auction</li>
+                    <li><code>amount</code> (<code>number</code>), Bid amount in TON</li>
                 </ul>
 
                 <div class="code-block"><div class="code-header"><span>Place a bid</span></div><pre><code class="language-typescript">const bid = await sdk.ton.dns.bid("premium-name.ton", 15);
@@ -193,12 +192,12 @@ if (bid.success) {
                 <p>Link a domain you own to a wallet address, or remove the link.</p>
                 <p><strong>Parameters (link):</strong></p>
                 <ul>
-                    <li><code>domain</code> (<code>string</code>) — Domain you own</li>
-                    <li><code>address</code> (<code>string</code>) — TON wallet address to link</li>
+                    <li><code>domain</code> (<code>string</code>), Domain you own</li>
+                    <li><code>address</code> (<code>string</code>), TON wallet address to link</li>
                 </ul>
                 <p><strong>Parameters (unlink):</strong></p>
                 <ul>
-                    <li><code>domain</code> (<code>string</code>) — Domain you own</li>
+                    <li><code>domain</code> (<code>string</code>), Domain you own</li>
                 </ul>
 
                 <div class="code-block"><div class="code-header"><span>Link and unlink a domain</span></div><pre><code class="language-typescript">// Link domain to the bot's own wallet
@@ -218,8 +217,8 @@ console.log("Domain unlinked");</code></pre></div>
                 <p>Set or update the TON Site (ADNL) record for a .ton domain. This allows the domain to point to a TON Site served over the ADNL network.</p>
                 <p><strong>Parameters:</strong></p>
                 <ul>
-                    <li><code>domain</code> (<code>string</code>) — Domain you own (e.g. <code>"mysite.ton"</code>)</li>
-                    <li><code>adnlAddress</code> (<code>string</code>) — ADNL address of the TON Site node (hex string)</li>
+                    <li><code>domain</code> (<code>string</code>), Domain you own (e.g. <code>"mysite.ton"</code>)</li>
+                    <li><code>adnlAddress</code> (<code>string</code>), ADNL address of the TON Site node (hex string)</li>
                 </ul>
 
                 <div class="code-block"><div class="code-header"><span>Set ADNL site record</span></div><pre><code class="language-typescript">// Point a .ton domain to a TON Site
@@ -279,10 +278,10 @@ console.log("TON Site ADNL record set successfully");</code></pre></div>
             <section class="section" id="gotchas">
                 <h2>Gotchas</h2>
                 <ul>
-                    <li><strong><code>DnsCheckResult.auction</code> is reserved</strong> — the <code>auction</code> field exists in the TypeScript types but is NOT populated by the current implementation. It is reserved for future use. Do not rely on this field; use <code>getAuctions()</code> to find active auctions.</li>
-                    <li><strong>Domain names include <code>.ton</code></strong> — always pass the full domain name including the <code>.ton</code> suffix (e.g. <code>"myproject.ton"</code>).</li>
+                    <li><strong><code>DnsCheckResult.auction</code> is reserved</strong>, the <code>auction</code> field exists in the TypeScript types but is NOT populated by the current implementation. It is reserved for future use. Do not rely on this field; use <code>getAuctions()</code> to find active auctions.</li>
+                    <li><strong>Domain names include <code>.ton</code></strong>, always pass the full domain name including the <code>.ton</code> suffix (e.g. <code>"myproject.ton"</code>).</li>
                     <li><strong>You must own the domain</strong> to call <code>link()</code>, <code>unlink()</code>, or <code>setSiteRecord()</code>. These operations require the bot's wallet to be the domain owner.</li>
-                    <li><strong>Auction bids are irreversible</strong> — TON sent for bids is locked until the auction ends. If you are outbid, your TON is returned.</li>
+                    <li><strong>Auction bids are irreversible</strong>, TON sent for bids is locked until the auction ends. If you are outbid, your TON is returned.</li>
                     <li><strong><code>resolve()</code> returns <code>null</code></strong> if the domain does not exist. It returns a result with <code>walletAddress: null</code> if the domain exists but has no wallet linked.</li>
                 </ul>
             </section>
@@ -341,7 +340,7 @@ export default {
         const check = await sdk.ton.dns.check(domain);
 
         if (!check.available) {
-          // Domain is taken — resolve for details
+          // Domain is taken, resolve for details
           const resolved = await sdk.ton.dns.resolve(domain);
           return {
             available: false,

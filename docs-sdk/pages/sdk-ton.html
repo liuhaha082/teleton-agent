@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sdk.ton — TON Blockchain - Teleton Agent Documentation</title>
+    <title>sdk.ton, TON Blockchain - Teleton Agent Documentation</title>
     <meta name="description" content="Complete reference for TON wallet, transfers, jettons, NFTs, and payment verification via the Teleton Plugin SDK.">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -29,15 +29,14 @@
         <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
             <div class="nav-section"><div class="nav-section-title">Start Here</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="/index.html" class="nav-link">Introduction</a></li><li><a href="installation.html" class="nav-link">Installation</a></li><li><a href="quickstart.html" class="nav-link">Quick Start</a></li><li><a href="configuration.html" class="nav-link">Configuration</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">Understand</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="architecture.html" class="nav-link">Architecture</a></li><li><a href="agentic-loop.html" class="nav-link">Agentic Loop</a></li><li><a href="memory-system.html" class="nav-link">Memory System</a></li><li><a href="security.html" class="nav-link">Security</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (66)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (7)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Configure</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="multi-llm.html" class="nav-link">Multi-LLM Providers</a></li><li><a href="scheduled-tasks.html" class="nav-link">Scheduled Tasks</a></li><li><a href="webui.html" class="nav-link">WebUI Dashboard</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li><li><a href="create-plugin.html" class="nav-link">Create a Plugin</a></li><li><a href="api-events.html" class="nav-link">Plugin Lifecycle</a></li><li><a href="mcp-servers.html" class="nav-link">MCP Servers</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (76)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (8)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">SDK Reference</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="sdk-overview.html" class="nav-link">Overview</a></li><li><a href="sdk-ton.html" class="nav-link active">TON Blockchain</a></li><li><a href="sdk-dex.html" class="nav-link">DEX Trading</a></li><li><a href="sdk-dns.html" class="nav-link">DNS &amp; Domains</a></li><li><a href="sdk-telegram.html" class="nav-link">Telegram</a></li><li><a href="sdk-bot.html" class="nav-link">Bot SDK</a></li><li><a href="sdk-utilities.html" class="nav-link">Utilities</a></li><li><a href="sdk-errors.html" class="nav-link">Error Handling</a></li><li><a href="tutorial-payment-bot.html" class="nav-link">Tutorial: Payment Bot</a></li><li><a href="tutorial-dex-bot.html" class="nav-link">Tutorial: DEX Bot</a></li><li><a href="tutorial-inline-bot.html" class="nav-link">Tutorial: Inline Bot</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="api-commands.html" class="nav-link">Admin Commands</a></li><li><a href="api-config.html" class="nav-link">Config Schema</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
         </nav></aside>
         <main class="main"><article class="content">
 
-            <h1>sdk.ton — TON Blockchain</h1>
+            <h1>sdk.ton, TON Blockchain</h1>
             <p class="lead">Complete reference for TON wallet, transfers, jettons, NFTs, and payment verification. Access via <code>sdk.ton</code> in your plugin.</p>
 
             <section class="section" id="quick-example">
@@ -160,9 +159,9 @@ if (balance &amp;&amp; price) {
 
                 <p><strong>Parameters:</strong></p>
                 <ul>
-                    <li><code>to</code> (<code>string</code>) — Recipient TON address (EQ... or UQ...)</li>
-                    <li><code>amount</code> (<code>number</code>) — Amount in TON (e.g. 1.5)</li>
-                    <li><code>comment</code> (<code>string</code>, optional) — Transaction comment/memo</li>
+                    <li><code>to</code> (<code>string</code>), Recipient TON address (EQ... or UQ...)</li>
+                    <li><code>amount</code> (<code>number</code>), Amount in TON (e.g. 1.5)</li>
+                    <li><code>comment</code> (<code>string</code>, optional), Transaction comment/memo</li>
                 </ul>
                 <p><strong>Throws:</strong> <code>PluginSDKError</code> with code <code>WALLET_NOT_INITIALIZED</code>, <code>INVALID_ADDRESS</code>, or <code>OPERATION_FAILED</code>.</p>
 
@@ -577,11 +576,11 @@ try {
             <section class="section" id="gotchas">
                 <h2>Gotchas</h2>
                 <ul>
-                    <li><strong><code>sendTON</code> uses <code>PAY_GAS_SEPARATELY</code></strong> — the amount you specify is the exact amount the recipient receives. Gas fees are deducted from the sender's remaining balance, not from the sent amount.</li>
-                    <li><strong>Float precision</strong> — The SDK uses string-based decimal conversion internally, NOT <code>Math.floor(amount * 10**decimals)</code>. This avoids floating-point precision errors like <code>1.1 * 10**9 = 1099999999</code>. Always use <code>toNano()</code>/<code>fromNano()</code> for conversions.</li>
-                    <li><strong><code>getPrice()</code> is cached for 30 seconds</strong> — multiple calls within 30 seconds return the same result without hitting the API. This is intentional to avoid rate limiting.</li>
-                    <li><strong><code>verifyPayment()</code> requires <code>used_transactions</code> table</strong> — your plugin must export a <code>migrate()</code> function that creates this table. Without it, replay protection will not work and the same transaction could be verified multiple times.</li>
-                    <li><strong>All send operations are irreversible</strong> — there is no undo on the blockchain. Always validate addresses with <code>validateAddress()</code> and confirm amounts before calling <code>sendTON()</code> or <code>sendJetton()</code>.</li>
+                    <li><strong><code>sendTON</code> uses <code>PAY_GAS_SEPARATELY</code></strong>, the amount you specify is the exact amount the recipient receives. Gas fees are deducted from the sender's remaining balance, not from the sent amount.</li>
+                    <li><strong>Float precision</strong>, The SDK uses string-based decimal conversion internally, NOT <code>Math.floor(amount * 10**decimals)</code>. This avoids floating-point precision errors like <code>1.1 * 10**9 = 1099999999</code>. Always use <code>toNano()</code>/<code>fromNano()</code> for conversions.</li>
+                    <li><strong><code>getPrice()</code> is cached for 30 seconds</strong>, multiple calls within 30 seconds return the same result without hitting the API. This is intentional to avoid rate limiting.</li>
+                    <li><strong><code>verifyPayment()</code> requires <code>used_transactions</code> table</strong>, your plugin must export a <code>migrate()</code> function that creates this table. Without it, replay protection will not work and the same transaction could be verified multiple times.</li>
+                    <li><strong>All send operations are irreversible</strong>, there is no undo on the blockchain. Always validate addresses with <code>validateAddress()</code> and confirm amounts before calling <code>sendTON()</code> or <code>sendJetton()</code>.</li>
                 </ul>
             </section>
 

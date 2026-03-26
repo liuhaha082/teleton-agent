@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sdk.bot — Bot SDK - Teleton Agent Documentation</title>
+    <title>sdk.bot, Bot SDK - Teleton Agent Documentation</title>
     <meta name="description" content="Build inline bots with styled buttons, callback handlers, and inline query responses using the Teleton Plugin Bot SDK.">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -29,15 +29,14 @@
         <aside class="sidebar" id="sidebar"><nav class="sidebar-nav">
             <div class="nav-section"><div class="nav-section-title">Start Here</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="/index.html" class="nav-link">Introduction</a></li><li><a href="installation.html" class="nav-link">Installation</a></li><li><a href="quickstart.html" class="nav-link">Quick Start</a></li><li><a href="configuration.html" class="nav-link">Configuration</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">Understand</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="architecture.html" class="nav-link">Architecture</a></li><li><a href="agentic-loop.html" class="nav-link">Agentic Loop</a></li><li><a href="memory-system.html" class="nav-link">Memory System</a></li><li><a href="security.html" class="nav-link">Security</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (66)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (7)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Configure</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="multi-llm.html" class="nav-link">Multi-LLM Providers</a></li><li><a href="scheduled-tasks.html" class="nav-link">Scheduled Tasks</a></li><li><a href="webui.html" class="nav-link">WebUI Dashboard</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li><li><a href="create-plugin.html" class="nav-link">Create a Plugin</a></li><li><a href="api-events.html" class="nav-link">Plugin Lifecycle</a></li><li><a href="mcp-servers.html" class="nav-link">MCP Servers</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Tools</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="tools-telegram.html" class="nav-link">Telegram (76)</a></li><li><a href="tools-ton.html" class="nav-link">TON Blockchain (15)</a></li><li><a href="tools-dex.html" class="nav-link">DEX Trading (10)</a></li><li><a href="tools-dns.html" class="nav-link">DNS &amp; Domains (8)</a></li><li><a href="tools-deals.html" class="nav-link">Deals &amp; Escrow (5)</a></li><li><a href="tools-other.html" class="nav-link">Utilities</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Build Plugins</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="plugin-sdk.html" class="nav-link">Plugin SDK</a></li></div></ul></div>
 <div class="nav-section"><div class="nav-section-title">SDK Reference</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="sdk-overview.html" class="nav-link">Overview</a></li><li><a href="sdk-ton.html" class="nav-link">TON Blockchain</a></li><li><a href="sdk-dex.html" class="nav-link">DEX Trading</a></li><li><a href="sdk-dns.html" class="nav-link">DNS &amp; Domains</a></li><li><a href="sdk-telegram.html" class="nav-link">Telegram</a></li><li><a href="sdk-bot.html" class="nav-link active">Bot SDK</a></li><li><a href="sdk-utilities.html" class="nav-link">Utilities</a></li><li><a href="sdk-errors.html" class="nav-link">Error Handling</a></li><li><a href="tutorial-payment-bot.html" class="nav-link">Tutorial: Payment Bot</a></li><li><a href="tutorial-dex-bot.html" class="nav-link">Tutorial: DEX Bot</a></li><li><a href="tutorial-inline-bot.html" class="nav-link">Tutorial: Inline Bot</a></li></div></ul></div>
-<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="api-commands.html" class="nav-link">Admin Commands</a></li><li><a href="api-config.html" class="nav-link">Config Schema</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
+<div class="nav-section"><div class="nav-section-title">Deploy &amp; Manage</div><ul class="nav-list"><div class="nav-list-inner"><li><a href="deploy-docker.html" class="nav-link">Docker</a></li><li><a href="cli-reference.html" class="nav-link">CLI Reference</a></li></div></ul></div>
         </nav></aside>
         <main class="main"><article class="content">
 
-            <h1>sdk.bot &mdash; Bot SDK</h1>
+            <h1>sdk.bot: Bot SDK</h1>
             <p class="lead">Build inline bots with styled buttons, callback handlers, and inline query responses using the Bot SDK.</p>
 
             <section class="section" id="quick-example">
@@ -117,10 +116,10 @@ export const start = async (sdk: PluginSDK) =&gt; {
                     </tbody>
                 </table></div>
                 <div class="code-block"><div class="code-header"><span>Inline query handler</span></div><pre><code class="language-typescript">sdk.bot.onInlineQuery(async (ctx) =&gt; {
-  // ctx.query  — the search text (prefix already stripped)
-  // ctx.queryId — Telegram query ID
-  // ctx.userId — user who triggered the query
-  // ctx.offset — pagination offset string
+  // ctx.query , the search text (prefix already stripped)
+  // ctx.queryId, Telegram query ID
+  // ctx.userId, user who triggered the query
+  // ctx.offset, pagination offset string
 
   const results = await searchDatabase(ctx.query);
 
@@ -146,13 +145,13 @@ export const start = async (sdk: PluginSDK) =&gt; {
                     </tbody>
                 </table></div>
                 <div class="code-block"><div class="code-header"><span>Callback handler with glob pattern</span></div><pre><code class="language-typescript">sdk.bot.onCallback("vote:*", async (ctx) =&gt; {
-  // ctx.data  — raw callback data (prefix stripped)
-  // ctx.match — regex match groups from the pattern
-  // ctx.userId — user who clicked
-  // ctx.username — optional username
-  // ctx.inlineMessageId — if from an inline message
-  // ctx.chatId — if from a regular message
-  // ctx.messageId — if from a regular message
+  // ctx.data , raw callback data (prefix stripped)
+  // ctx.match, regex match groups from the pattern
+  // ctx.userId, user who clicked
+  // ctx.username, optional username
+  // ctx.inlineMessageId, if from an inline message
+  // ctx.chatId, if from a regular message
+  // ctx.messageId, if from a regular message
 
   const choice = ctx.data.split(":")[1]; // e.g. "yes" from "vote:yes"
 
@@ -173,9 +172,9 @@ export const start = async (sdk: PluginSDK) =&gt; {
                     </tbody>
                 </table></div>
                 <div class="code-block"><div class="code-header"><span>Chosen result tracking</span></div><pre><code class="language-typescript">sdk.bot.onChosenResult(async (ctx) =&gt; {
-  // ctx.resultId — the ID of the chosen result
-  // ctx.inlineMessageId — for editing the sent message later
-  // ctx.query — the original query text
+  // ctx.resultId, the ID of the chosen result
+  // ctx.inlineMessageId, for editing the sent message later
+  // ctx.query, the original query text
 
   sdk.log.info(`User chose result ${ctx.resultId} for query "${ctx.query}"`);
 
@@ -227,10 +226,10 @@ export const start = async (sdk: PluginSDK) =&gt; {
   ],
 ]);
 
-// For GramJS (MTProto) — supports colored buttons
+// For GramJS (MTProto), supports colored buttons
 const tlMarkup = kb.toTL();
 
-// For Grammy (Bot API) — standard buttons, no colors
+// For Grammy (Bot API), standard buttons, no colors
 const grammyKeyboard = kb.toGrammy();
 
 // Access raw rows (callbacks already prefixed)
@@ -437,7 +436,7 @@ export const start = async (sdk: PluginSDK) =&gt; {
     return;
   }
 
-  // Handle inline queries — show a "Roll Dice" option
+  // Handle inline queries, show a "Roll Dice" option
   sdk.bot.onInlineQuery(async (ctx) =&gt; {
     const sides = parseInt(ctx.query) || 6;
     const clamped = Math.min(Math.max(sides, 2), 20);
