@@ -312,6 +312,7 @@ export function createTelegramSocialSDK(
           ),
           publicVoters: !anonymous,
           multipleChoice,
+          hash: toLong(0),
         });
 
         const result = await client.invoke(
@@ -383,6 +384,7 @@ export function createTelegramSocialSDK(
           quiz: true,
           publicVoters: false,
           multipleChoice: false,
+          hash: toLong(0),
         });
 
         const result = await client.invoke(
@@ -390,7 +392,7 @@ export function createTelegramSocialSDK(
             peer: chatId,
             media: new Api.InputMediaPoll({
               poll,
-              correctAnswers: [Buffer.from([correctIndex])],
+              correctAnswers: [correctIndex],
               solution: explanation,
               solutionEntities: [],
             }),

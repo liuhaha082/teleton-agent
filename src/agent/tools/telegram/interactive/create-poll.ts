@@ -1,4 +1,4 @@
-import { randomLong } from "../../../../utils/gramjs-bigint.js";
+import { randomLong, toLong } from "../../../../utils/gramjs-bigint.js";
 import { Type } from "@sinclair/typebox";
 import { Api } from "telegram";
 import type { Tool, ToolExecutor, ToolResult } from "../../types.js";
@@ -126,6 +126,7 @@ export const telegramCreatePollExecutor: ToolExecutor<CreatePollParams> = async 
       multipleChoice,
       closePeriod,
       closeDate,
+      hash: toLong(0),
     });
 
     const _result = await gramJsClient.invoke(

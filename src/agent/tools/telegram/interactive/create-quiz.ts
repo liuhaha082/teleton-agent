@@ -1,4 +1,4 @@
-import { randomLong } from "../../../../utils/gramjs-bigint.js";
+import { randomLong, toLong } from "../../../../utils/gramjs-bigint.js";
 import { Type } from "@sinclair/typebox";
 import { Api } from "telegram";
 import type { Tool, ToolExecutor, ToolResult } from "../../types.js";
@@ -118,6 +118,7 @@ export const telegramCreateQuizExecutor: ToolExecutor<CreateQuizParams> = async 
       multipleChoice: false, // Quizzes only allow one answer
       closePeriod,
       closeDate,
+      hash: toLong(0),
     });
 
     const _result = await gramJsClient.invoke(
@@ -125,7 +126,7 @@ export const telegramCreateQuizExecutor: ToolExecutor<CreateQuizParams> = async 
         peer: chatId,
         media: new Api.InputMediaPoll({
           poll,
-          correctAnswers: [Buffer.from([correctOptionIndex])],
+          correctAnswers: [correctOptionIndex],
           solution: explanation,
           solutionEntities: [],
         }),
