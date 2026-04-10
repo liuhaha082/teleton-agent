@@ -1,6 +1,7 @@
 export type SupportedProvider =
   | "anthropic"
   | "claude-code"
+  | "codex"
   | "openai"
   | "google"
   | "xai"
@@ -40,6 +41,18 @@ const PROVIDER_REGISTRY: Record<SupportedProvider, ProviderMetadata> = {
     utilityModel: "claude-haiku-4-5-20251001",
     toolLimit: null,
     piAiProvider: "anthropic",
+  },
+  codex: {
+    id: "codex",
+    displayName: "Codex (Auto)",
+    envVar: "OPENAI_API_KEY",
+    keyPrefix: null,
+    keyHint: "Auto-detected from Codex CLI",
+    consoleUrl: "https://platform.openai.com/",
+    defaultModel: "gpt-5.4",
+    utilityModel: "gpt-4o-mini",
+    toolLimit: 128,
+    piAiProvider: "openai-codex",
   },
   zai: {
     id: "zai",
@@ -226,7 +239,13 @@ export function getSupportedProviders(): ProviderMetadata[] {
 export function validateApiKeyFormat(provider: SupportedProvider, key: string): string | undefined {
   const meta = PROVIDER_REGISTRY[provider];
   if (!meta) return `Unknown provider: ${provider}`;
-  if (provider === "cocoon" || provider === "local" || provider === "claude-code") return undefined; // No API key needed (claude-code auto-detects)
+  if (
+    provider === "cocoon" ||
+    provider === "local" ||
+    provider === "claude-code" ||
+    provider === "codex"
+  )
+    return undefined;
   if (!key || key.trim().length === 0) return "API key is required";
   if (meta.keyPrefix && !key.startsWith(meta.keyPrefix)) {
     return `Invalid format (should start with ${meta.keyPrefix})`;

@@ -20,6 +20,7 @@ import {
   getClaudeCodeApiKey,
   refreshClaudeCodeApiKey,
 } from "../providers/claude-code-credentials.js";
+import { getCodexApiKey, refreshCodexApiKey } from "../providers/codex-credentials.js";
 
 const log = createLogger("LLM");
 
@@ -33,6 +34,7 @@ export function getEffectiveApiKey(provider: string, rawKey: string): string {
   if (provider === "local") return "local";
   if (provider === "cocoon") return "";
   if (provider === "claude-code") return getClaudeCodeApiKey(rawKey);
+  if (provider === "codex") return getCodexApiKey(rawKey);
   return rawKey;
 }
 
@@ -261,7 +263,7 @@ export async function chatWithContext(
   const completeOptions: Record<string, unknown> = {
     apiKey: getEffectiveApiKey(provider, config.api_key),
     maxTokens: options.maxTokens ?? config.max_tokens,
-    temperature,
+    ...(provider !== "codex" && { temperature }),
     sessionId: options.sessionId,
     cacheRetention: "long",
   };
@@ -282,6 +284,22 @@ export async function chatWithContext(
   ) {
     log.warn("Claude Code token rejected (401), refreshing credentials and retrying...");
     const refreshedKey = await refreshClaudeCodeApiKey();
+    if (refreshedKey) {
+      completeOptions.apiKey = refreshedKey;
+      response = await complete(model, context, completeOptions as ProviderStreamOptions);
+    }
+  }
+
+  // Codex provider: retry once on 401/Unauthorized by re-reading credentials
+  if (
+    provider === "codex" &&
+    response.stopReason === "error" &&
+    response.errorMessage &&
+    (response.errorMessage.includes("401") ||
+      response.errorMessage.toLowerCase().includes("unauthorized"))
+  ) {
+    log.warn("Codex token rejected (401), re-reading credentials and retrying...");
+    const refreshedKey = await refreshCodexApiKey();
     if (refreshedKey) {
       completeOptions.apiKey = refreshedKey;
       response = await complete(model, context, completeOptions as ProviderStreamOptions);
@@ -358,7 +376,7 @@ export function streamWithContext(config: AgentConfig, options: ChatOptions): St
   const streamOptions: Record<string, unknown> = {
     apiKey: getEffectiveApiKey(provider, config.api_key),
     maxTokens: options.maxTokens ?? config.max_tokens,
-    temperature,
+    ...(provider !== "codex" && { temperature }),
     sessionId: options.sessionId,
     cacheRetention: "long",
   };

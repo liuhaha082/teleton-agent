@@ -24,6 +24,7 @@ export const AgentConfigSchema = z.object({
     .enum([
       "anthropic",
       "claude-code",
+      "codex",
       "openai",
       "google",
       "xai",

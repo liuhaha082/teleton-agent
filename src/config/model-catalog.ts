@@ -55,6 +55,14 @@ export const MODEL_OPTIONS: Record<string, ModelOption[]> = {
     { value: "o3", name: "o3", description: "Reasoning, 200K ctx, $2/M" },
     { value: "codex-mini-latest", name: "Codex Mini", description: "Coding specialist" },
   ],
+  "openai-codex": [
+    { value: "gpt-5.4", name: "GPT-5.4", description: "Latest frontier, reasoning" },
+    { value: "gpt-5.4-mini", name: "GPT-5.4 Mini", description: "Fast & cheap" },
+    { value: "gpt-5.3-codex", name: "GPT-5.3 Codex", description: "Coding specialist" },
+    { value: "gpt-5.2-codex", name: "GPT-5.2 Codex", description: "Coding specialist" },
+    { value: "gpt-5.1", name: "GPT-5.1", description: "General purpose" },
+    { value: "gpt-5.1-codex-max", name: "GPT-5.1 Codex Max", description: "Max reasoning" },
+  ],
   google: [
     { value: "gemini-3.1-pro-preview", name: "Gemini 3.1 Pro", description: "Preview, latest gen" },
     {
@@ -242,8 +250,9 @@ export const MODEL_OPTIONS: Record<string, ModelOption[]> = {
   ],
 };
 
-/** Get models for a provider (claude-code maps to anthropic) */
+/** Get models for a provider (claude-code → anthropic, codex → openai-codex) */
 export function getModelsForProvider(provider: string): ModelOption[] {
-  const key = provider === "claude-code" ? "anthropic" : provider;
+  const key =
+    provider === "claude-code" ? "anthropic" : provider === "codex" ? "openai-codex" : provider;
   return MODEL_OPTIONS[key] || [];
 }

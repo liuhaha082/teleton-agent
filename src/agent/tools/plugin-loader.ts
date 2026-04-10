@@ -271,7 +271,7 @@ export function adaptPlugin(
               },
               ...(def.category ? { category: def.category } : {}),
             } as Tool,
-            executor: pluginDb ? withPluginDb(sandboxedExecutor) : sandboxedExecutor,
+            executor: pluginDb && hasMigrate ? withPluginDb(sandboxedExecutor) : sandboxedExecutor,
             scope: def.scope as ToolScope | undefined,
           };
         });
