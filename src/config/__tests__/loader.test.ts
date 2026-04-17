@@ -350,7 +350,7 @@ describe("Config Loader", () => {
       const config = loadConfig(TEST_CONFIG_PATH);
 
       // Agent defaults
-      expect(config.agent.model).toBe("claude-opus-4-6");
+      expect(config.agent.model).toBe("claude-haiku-4-5-20251001");
       expect(config.agent.max_tokens).toBe(4096);
       expect(config.agent.temperature).toBe(0.7);
       expect(config.agent.max_agentic_iterations).toBe(5);
