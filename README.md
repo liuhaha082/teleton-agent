@@ -174,7 +174,7 @@ The `teleton setup` wizard generates a fully configured `~/.teleton/config.yaml`
 agent:
   provider: "anthropic"              # anthropic | claude-code | openai | google | xai | groq | openrouter | moonshot | mistral | cerebras | zai | minimax | huggingface | cocoon | local
   api_key: "sk-ant-api03-..."
-  model: "claude-opus-4-6"
+  model: "claude-haiku-4-5-20251001"
   utility_model: "claude-haiku-4-5-20251001"  # for summarization, compaction, vision
   max_agentic_iterations: 5
   session_reset_policy:

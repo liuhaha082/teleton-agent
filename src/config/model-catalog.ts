@@ -13,14 +13,19 @@ export interface ModelOption {
 export const MODEL_OPTIONS: Record<string, ModelOption[]> = {
   anthropic: [
     {
+      value: "claude-opus-4-7",
+      name: "Claude Opus 4.7",
+      description: "Most capable, 1M ctx, reasoning",
+    },
+    {
       value: "claude-opus-4-6",
       name: "Claude Opus 4.6",
-      description: "Most capable, 1M ctx, $5/M",
+      description: "Previous gen, 1M ctx, $5/M",
     },
     {
       value: "claude-opus-4-5-20251101",
       name: "Claude Opus 4.5",
-      description: "Previous gen, 200K ctx, $5/M",
+      description: "Older gen, 200K ctx, $5/M",
     },
     {
       value: "claude-sonnet-4-6",
@@ -30,7 +35,7 @@ export const MODEL_OPTIONS: Record<string, ModelOption[]> = {
     {
       value: "claude-haiku-4-5-20251001",
       name: "Claude Haiku 4.5",
-      description: "Fast & cheap, $1/M",
+      description: "Fast & cheap, $1/M (default)",
     },
   ],
   openai: [
@@ -107,6 +112,11 @@ export const MODEL_OPTIONS: Record<string, ModelOption[]> = {
     },
   ],
   openrouter: [
+    {
+      value: "anthropic/claude-opus-4.7",
+      name: "Claude Opus 4.7",
+      description: "Latest, 1M ctx, reasoning",
+    },
     { value: "anthropic/claude-opus-4.5", name: "Claude Opus 4.5", description: "200K ctx, $5/M" },
     {
       value: "anthropic/claude-sonnet-4-6",

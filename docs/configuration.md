@@ -40,7 +40,7 @@ LLM provider and agentic loop configuration.
 |-----|------|---------|-------------|
 | `agent.provider` | `enum` | `"anthropic"` | LLM provider. One of: `anthropic`, `claude-code`, `openai`, `google`, `xai`, `groq`, `openrouter`, `moonshot`, `mistral`, `cerebras`, `zai`, `minimax`, `huggingface`, `cocoon`, `local`. |
 | `agent.api_key` | `string` | `""` | API key for the chosen provider. Can be overridden with `TELETON_API_KEY` env var. |
-| `agent.model` | `string` | `"claude-opus-4-6"` | Primary model ID. Auto-detected from provider if not set (only for non-Anthropic providers). |
+| `agent.model` | `string` | `"claude-haiku-4-5-20251001"` | Primary model ID. Auto-detected from provider if not set (only for non-Anthropic providers). |
 | `agent.utility_model` | `string` | *auto-detected* | Cheap/fast model used for summarization and compaction. If omitted, the platform selects one based on the provider (e.g., `claude-haiku-4-5-20251001` for Anthropic, `gpt-4o-mini` for OpenAI). |
 | `agent.base_url` | `string` | *optional* | Base URL for local LLM server (e.g., `http://localhost:11434/v1`). Must be a valid URL. |
 | `agent.max_tokens` | `number` | `4096` | Maximum tokens in each LLM response. |
@@ -65,7 +65,7 @@ Controls when conversation sessions are cleared, giving the agent a fresh memory
 agent:
   provider: "anthropic"
   api_key: "sk-ant-..."
-  model: "claude-opus-4-6"
+  model: "claude-haiku-4-5-20251001"
   utility_model: "claude-haiku-4-5-20251001"
   max_tokens: 4096
   temperature: 0.7
@@ -83,8 +83,8 @@ When you change the `provider` and omit `model`, the platform auto-selects:
 
 | Provider | Default Model | Default Utility Model |
 |----------|--------------|----------------------|
-| `anthropic` | `claude-opus-4-6` | `claude-haiku-4-5-20251001` |
-| `claude-code` | `claude-opus-4-6` | `claude-haiku-4-5-20251001` |
+| `anthropic` | `claude-haiku-4-5-20251001` | `claude-haiku-4-5-20251001` |
+| `claude-code` | `claude-haiku-4-5-20251001` | `claude-haiku-4-5-20251001` |
 | `openai` | `gpt-5.4` | `gpt-4o-mini` |
 | `google` | `gemini-2.5-flash` | `gemini-2.0-flash-lite` |
 | `xai` | `grok-3` | `grok-3-mini-fast` |
@@ -659,7 +659,7 @@ meta:
 agent:
   provider: "anthropic"
   api_key: "sk-ant-..."
-  model: "claude-opus-4-6"
+  model: "claude-haiku-4-5-20251001"
   max_tokens: 4096
   temperature: 0.7
   max_agentic_iterations: 5
