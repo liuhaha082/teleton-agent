@@ -1,5 +1,5 @@
 # ---- Build stage ----
-FROM node:20.20.2-trixie-slim AS build
+FROM node:24.15.0-trixie-slim AS build
 
 WORKDIR /app
 
@@ -30,7 +30,7 @@ RUN cd web && npm ci
 RUN npm run build
 
 # ---- Runtime stage ----
-FROM node:20.20.2-trixie-slim
+FROM node:24.15.0-trixie-slim
 
 WORKDIR /app
 
